@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavButton } from "./NavButton";
 import { useMediaQuery } from "react-responsive";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import Hero from "./Hero";
 
 const Navbar = () => {
   const pages = ["Home", "Search Hospitals", "About", "Contact"];
@@ -46,7 +47,6 @@ const Navbar = () => {
             );
           })}
       </div>
-      <main className="p-10">Main content</main>
     </div>
   );
 };
