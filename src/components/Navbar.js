@@ -6,22 +6,22 @@ const Navbar = () => {
   const [active, setActive] = useState(pages[0]);
 
   return (
-    <div className="bg-blizzard-900 flex justify-center">
-      {/* <div className="p-3 bg-blizzard-900 flex justify-center">
-        <img className="" src="" alt="RN logo"></img>
-      </div> */}
-      <div className="bg-blizzard-900 p-3 w-full mb-2 flex justify-center text-lg">
-        {pages.map((page) => {
-          return (
-            <NavButton
-              key={page}
-              page={page}
-              active={active}
-              setActive={setActive}
-            />
-          );
-        })}
-      </div>
+    // <div className="bg-blizzard-900 flex justify-center">
+    //   {/* <div className="p-3 bg-blizzard-900 flex justify-center">
+    //     <img className="" src="" alt="RN logo"></img>
+    //   </div> */}
+    //   </div>
+    <div className="bg-blizzard-900 p-3 w-full mb-2 flex justify-center text-lg items-center">
+      {pages.map((page) => {
+        return (
+          <NavButton
+            key={page}
+            page={page}
+            active={active}
+            setActive={setActive}
+          />
+        );
+      })}
     </div>
   );
 };
