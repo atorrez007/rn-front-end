@@ -21,7 +21,7 @@ const Navbar = () => {
 
   return (
     <div className="md:flex">
-      <div className="bg-blizzard-900 relative p-4 md:min-h-screen md:w-[250px] md:text-left text-center flex flex-col">
+      <div className="bg-blizzard-900 relative px-0 py-3 md:min-h-screen md:w-[250px] md:text-left text-center flex flex-col">
         {isMobile && (
           <button
             onClick={() => {
@@ -29,15 +29,17 @@ const Navbar = () => {
             }}
           >
             {open ? (
-              <XMarkIcon className=" hover:bg-blizzard-600 rounded-full p-2 w-12 text-white absolute top-2 left-2" />
+              <XMarkIcon className=" hover:bg-blizzard-600 rounded-full mt-2 p-2 w-12 text-white absolute top-2 left-2" />
             ) : (
-              <Bars3Icon className="hover:bg-blizzard-600 rounded-full w-12 p-2 text-white absolute top-2 left-2" />
+              <Bars3Icon className="hover:bg-blizzard-600 rounded-full mt-2 w-12 p-2 text-white absolute top-2 left-2" />
             )}
           </button>
         )}
-        <h1 className="text-lg text-center text-white font-bold p-2  md:text-left md:p-4 ">
-          RN-RightNow
-        </h1>
+        <div className="w-full">
+          <h1 className="text-lg text-center mb-2  bg-blizzard-800 text-white font-bold p-4 md:text-center md:p-4 ">
+            RN-RightNow
+          </h1>
+        </div>
         {open &&
           pages.map((page) => {
             return (
