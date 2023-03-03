@@ -2,9 +2,15 @@ import React, { useEffect, useState } from "react";
 import { NavButton } from "./NavButton";
 import { useMediaQuery } from "react-responsive";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const pages = ["Home", "Search Hospitals", "About", "Contact"];
+  const pages = [
+    { name: "Home", query: "" },
+    { name: "About", query: "about" },
+    { name: "Search Hospital", query: "search" },
+    { name: "Contact", query: "contact" },
+  ];
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const [active, setActive] = useState(pages[0]);
   const [open, setOpen] = useState(false);
@@ -35,14 +41,16 @@ const Navbar = () => {
         {open &&
           pages.map((page) => {
             return (
-              <NavButton
-                key={page}
-                page={page}
-                active={active}
-                setActive={setActive}
-                open={open}
-                setOpen={setOpen}
-              />
+              <Link to={`/${page.query}`}>
+                <NavButton
+                  key={page.name}
+                  page={page.name}
+                  active={active}
+                  setActive={setActive}
+                  open={open}
+                  setOpen={setOpen}
+                />
+              </Link>
             );
           })}
       </div>
