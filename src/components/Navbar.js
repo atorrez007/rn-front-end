@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { NavButton } from "./NavButton";
 import { useMediaQuery } from "react-responsive";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
-import Hero from "./Hero";
 
 const Navbar = () => {
   const pages = ["Home", "Search Hospitals", "About", "Contact"];
@@ -15,8 +14,8 @@ const Navbar = () => {
   }, [isMobile]);
 
   return (
-    <div className="md:flex ">
-      <div className="bg-blizzard-900 relative p-3 md:min-h-screen md:w-[250px] md:text-left text-center flex flex-col">
+    <div className="md:flex">
+      <div className="bg-blizzard-900 relative p-4 md:min-h-screen md:w-[250px] md:text-left text-center flex flex-col">
         {isMobile && (
           <button
             onClick={() => {
@@ -30,7 +29,7 @@ const Navbar = () => {
             )}
           </button>
         )}
-        <h1 className="text-lg text-center text-white font-bold  md:text-left md:p-4 ">
+        <h1 className="text-lg text-center text-white font-bold p-2  md:text-left md:p-4 ">
           RN-RightNow
         </h1>
         {open &&

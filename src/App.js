@@ -1,19 +1,10 @@
-import { BrowserRouter } from "react-router-dom";
-import Hero from "./components/Hero";
-
 import Navbar from "./components/Navbar";
-import Polaroid from "./components/Polaroid";
+
 function App() {
   return (
-    <BrowserRouter>
-      <div className="md:flex p-4">
-        <Navbar />
-        <div>
-          <Hero />
-          <Polaroid />
-        </div>
-      </div>
-    </BrowserRouter>
+    <div className="md:flex md:p-1 p-1 sm:p-1  md:bg-gray-600 bg-gray-600 flex flex-col h-screen">
+      <Navbar />
+    </div>
   );
 }
 

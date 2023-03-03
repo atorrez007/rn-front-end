@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 
-const Polaroid = () => {
+const About = () => {
   return (
     <div className="md:flex p-1">
       <Navbar />
@@ -9,4 +9,4 @@ const Polaroid = () => {
   );
 };
 
-export default Polaroid;
+export default About;
