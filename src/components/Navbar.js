@@ -36,14 +36,14 @@ const Navbar = () => {
           </button>
         )}
         <div className="w-full">
-          <h1 className="text-lg text-center mb-2  bg-blizzard-800 text-white font-bold p-4 md:text-center md:p-4 ">
+          <h1 className="text-lg text-center mb-2 bg-blizzard-800   text-white font-bold p-4 md:text-center md:p-4 ">
             RN-RightNow
           </h1>
         </div>
         {open &&
           pages.map((page) => {
             return (
-              <Link to={`/${page.query}`}>
+              <Link key={page.name} to={`/${page.query}`}>
                 <NavButton
                   key={page.name}
                   page={page.name}
