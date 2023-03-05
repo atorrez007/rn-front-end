@@ -1,9 +1,10 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import hospitalData from "../test-hospital-data";
 import HospitalCard from "./HospitalCard";
 import Navbar from "./Navbar";
 
+// Previously the <Link> was used to wrap all the hospitals in a link, but now the link is entered into the hospital card component. If we want to change accessibility to allow clicking anywhere on the card, we can revert to putting the link in the hospitalData.map once again.
 const Search = () => {
   const hospitals = hospitalData.map((hospital) => (
     <HospitalCard
@@ -12,6 +13,7 @@ const Search = () => {
       city={hospital.city}
       state={hospital.state}
       img={hospital.img}
+      id={hospital.id}
     />
   ));
   return (

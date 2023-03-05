@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import Hero from "./components/Hero";
 import Search from "./components/Search";
 import Contact from "./components/Contact";
+import HospitalDetails from "./components/HospitalDetails";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/hero" element={<Hero />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/search/:hospitalId" element={<HospitalDetails />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </BrowserRouter>
