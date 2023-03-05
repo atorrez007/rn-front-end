@@ -1,5 +1,5 @@
 import React from "react";
-import HospitalCard from "./HospitalCard";
+
 import Navbar from "./Navbar";
 
 // 3 quadrants.
@@ -11,7 +11,6 @@ const Home = () => {
   return (
     <div className="flex">
       <Navbar />
-      <HospitalCard />
     </div>
   );
 };
