@@ -5,7 +5,6 @@ import Hero from "./components/Hero";
 import Search from "./components/Search";
 import Contact from "./components/Contact";
 import HospitalDetails from "./components/HospitalDetails";
-import Reviews from "./components/Reviews";
 
 function App() {
   return (

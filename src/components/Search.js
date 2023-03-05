@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-
-// import hospitalData from "../test-hospital-data";
 import HospitalCard from "./HospitalCard";
 import Navbar from "./Navbar";
 
