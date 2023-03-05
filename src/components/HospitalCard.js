@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import hospitalData from "../test-hospital-data";
 
 const HospitalCard = ({ name, city, state, img, id }) => {
   return (
