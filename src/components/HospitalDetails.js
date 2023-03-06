@@ -7,15 +7,17 @@ const HospitalDetails = () => {
   const { hospitalId } = useParams();
 
   useEffect(() => {
-    fetch("http://localhost:8000/hospitals")
+    fetch(`http://localhost:8000/hospitals/${hospitalId}`)
       .then((res) => res.json())
       .then((data) => setThisHospital(data));
   });
 
   // Temporary solution, but will eliminate the need for the more specific endpoint. A link between the db and the id being used will need to be implemented.
-  const targetHospital = thisHospital.find(
-    (hospital) => hospital.hospitalId === hospitalId
-  );
+
+  // const targetHospital = thisHospital.find(
+  //   (hospital) => hospital.hospitalId === hospitalId
+  // );
+
   // <div>
   //   <h1>Hospital Details</h1>
   //   <h1>{targetHospital ? targetHospital.name : null}</h1>
@@ -39,13 +41,13 @@ const HospitalDetails = () => {
         />
         <div className="px-6 py-4">
           <div className="font-bold text-xl mb-2">
-            <h1>{targetHospital ? targetHospital.name : null}</h1>
+            <h1>{thisHospital ? thisHospital.name : null}</h1>
           </div>
           <div className="text-gray-700 text-base">
-            <p>{targetHospital ? targetHospital.address : null}</p>
-            <p>{targetHospital ? targetHospital.city : null}</p>
-            <p>{targetHospital ? targetHospital.zipCode : null}</p>
-            <p>{targetHospital ? targetHospital.county : null}</p>
+            <p>{thisHospital ? thisHospital.address : null}</p>
+            <p>{thisHospital ? thisHospital.city : null}</p>
+            <p>{thisHospital ? thisHospital.zipCode : null}</p>
+            <p>{thisHospital ? thisHospital.county : null}</p>
           </div>
         </div>
         <div className="px-6 pt-4 pb-2">
