@@ -5,6 +5,7 @@ import Hero from "./components/Hero";
 import Search from "./components/Search";
 import Contact from "./components/Contact";
 import HospitalDetails from "./components/HospitalDetails";
+import Reviews from "./components/Reviews";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
           <Route path="/hero" element={<Hero />} />
           <Route path="/search" element={<Search />} />
           <Route path="/search/:hospitalId" element={<HospitalDetails />} />
-          {/* <Route path="/search/:hospitalId/reviews" element={<Reviews />} /> */}
+          <Route path="/search/:hospitalId/reviews" element={<Reviews />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </BrowserRouter>
