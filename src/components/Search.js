@@ -11,7 +11,7 @@ const Search = () => {
     fetch("http://localhost:8000/hospitals")
       .then((res) => res.json())
       .then((data) => setHospitalData(data));
-  });
+  }, []);
 
   const hospitals = hospitalData.map((hospital) => (
     <HospitalCard

@@ -9,12 +9,18 @@ const Reviews = () => {
     fetch(`http://localhost:8000/hospitals/${hospitalId}/reviews`)
       .then((res) => res.json())
       .then((data) => setReviews(data[0].reviews));
-  });
+  }, [hospitalId]);
 
   const reviewBreakdown = reviews.map((review) => {
     return (
-      <div className="flex flex-col" key={review._id}>
-        <div>
+      <div className="flex col-span-3" key={review._id}>
+        <div className="p-4">
+          <h1 className="text-lg">
+            Overall Score
+            <strong className="ml-3">{review.overallScore}</strong>
+          </h1>
+        </div>
+        {/* <div>
           <h1>
             Overall Score <strong>{review.overallScore}</strong>
           </h1>
@@ -23,16 +29,16 @@ const Reviews = () => {
           Accessibility <strong>{review.accessibility}</strong>
         </h1>
         <h1>
-          Dining Options{" "}
+          Dining Options
           <strong>
             {review.dinning.map((option) => (
-              <p>{option}</p>
+              <p key={option}>{option}</p>
             ))}
           </strong>
         </h1>
         <h1>{review.scrubColor}</h1>
         <h1>{review.housing}</h1>
-        <h1>{review.date}</h1>
+        <h1>{review.date}</h1> */}
       </div>
     );
   });
@@ -40,7 +46,7 @@ const Reviews = () => {
   return (
     <div>
       <h1>Reviews</h1>
-      <h1>{reviewBreakdown}</h1>
+      <h1>{reviewBreakdown ? reviewBreakdown : null}</h1>
     </div>
   );
 };
