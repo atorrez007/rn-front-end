@@ -7,31 +7,24 @@ const Search = () => {
   const [rawData, setRawData] = useState([]);
   const [hospitalData, setHospitalData] = useState([]);
   const [page, setPage] = useState("1");
+  const [state, setState] = useState("AK");
 
-  const changePage = (e) => {
-    e.preventDefault();
-    setPage(2);
+  const handleStateChange = (e) => {
+    setState(e.target.value);
   };
 
   // Query db without state middleware.
   useEffect(() => {
-    fetch(`http://localhost:8000/hospitals?page=${page}`)
+    fetch(`http://localhost:8000/hospitals?page=${page}&state=${state}`)
       .then((res) => res.json())
       .then((data) => setHospitalData(data));
-  }, [page]);
+  }, [page, state]);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/hospitals`)
+    fetch(`http://localhost:8000/hospitals?allHospitals=true`)
       .then((res) => res.json())
       .then((data) => setRawData(data));
   }, []);
-
-  const uniqueStates = rawData
-    .map((hospital) => hospital.state)
-    .filter((state, index, arr) => {
-      return arr.indexOf(state) === index;
-    })
-    .sort();
 
   const uniqueCities = rawData
     .map((hospital) => hospital.city)
@@ -44,8 +37,19 @@ const Search = () => {
     return <option key={index}>{city}</option>;
   });
 
+  const uniqueStates = rawData
+    .map((hospital) => hospital.state)
+    .filter((state, index, arr) => {
+      return arr.indexOf(state) === index;
+    })
+    .sort();
+
   const statesFiltered = uniqueStates.map((item, index) => {
-    return <option key={index}>{item}</option>;
+    return (
+      <option key={index} value={item}>
+        {item}
+      </option>
+    );
   });
 
   const hospitals = hospitalData.map((hospital) => (
@@ -63,7 +67,7 @@ const Search = () => {
     <div className="flex bg-wetfloor-500">
       <Navbar />
       <div className="p-11  w-full border-black border-solid">
-        <div className=" border-2 border-rose-600 h-10 py-8 mb-10 flex justify-center items-center px-4 sm:px-6 lg:px-8">
+        <div className="bg-blizzard-800 border-2 border-white rounded h-10 py-8 mb-10 flex justify-center items-center px-4 sm:px-6 lg:px-8">
           <input
             type="text"
             className="h-14 w-96 pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none"
@@ -71,17 +75,17 @@ const Search = () => {
           />
           <div className="">
             <label className="p-4 h-12 rounded text-center"></label>
-            <select className="">
-              <option>Choose a State</option>
+            <select className="" onChange={handleStateChange}>
+              <option value="AL">Choose a State</option>
               {statesFiltered}
             </select>
           </div>
           <div className="absolute top-4 right-3">
             <i className="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
-          </div>{" "}
+          </div>
           <div className="">
             <label className="p-4 h-12 rounded text-center"></label>
-            <select className="">
+            <select>
               <option>Choose a City</option>
               {citiesFiltered}
             </select>
