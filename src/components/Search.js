@@ -1,24 +1,34 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getHospitals } from "../redux/hospitalReducer";
 import HospitalCard from "./HospitalCard";
 import Navbar from "./Navbar";
 
 // Previously the <Link> was used to wrap all the hospitals in a link, but now the link is entered into the hospital card component. If we want to change accessibility to allow clicking anywhere on the card, we can revert to putting the link in the hospitalData.map once again.
 const Search = () => {
+  const dispatch = useDispatch();
+  const hospitalState = useSelector((state) => state.hospitals.hospitals);
   const [rawData, setRawData] = useState([]);
   const [hospitalData, setHospitalData] = useState([]);
   const [page, setPage] = useState("1");
   const [state, setState] = useState("AK");
-
+  const [rawQuery, setRawQuery] = useState(false);
   const handleStateChange = (e) => {
     setState(e.target.value);
   };
 
-  // Query db without state middleware.
+  const url = `http://localhost:8000/hospitals?page=${page}&state=${state}`;
+
   useEffect(() => {
-    fetch(`http://localhost:8000/hospitals?page=${page}&state=${state}`)
-      .then((res) => res.json())
-      .then((data) => setHospitalData(data));
-  }, [page, state]);
+    dispatch(getHospitals(url));
+  }, [dispatch, url]);
+
+  // Query db without state middleware.
+  // useEffect(() => {
+  //   fetch(`http://localhost:8000/hospitals?page=${page}&state=${state}`)
+  //     .then((res) => res.json())
+  //     .then((data) => setHospitalData(data));
+  // }, [page, state]);
 
   useEffect(() => {
     fetch(`http://localhost:8000/hospitals?allHospitals=true`)
@@ -52,7 +62,7 @@ const Search = () => {
     );
   });
 
-  const hospitals = hospitalData.map((hospital) => (
+  const hospitals = hospitalState.map((hospital) => (
     <HospitalCard
       key={hospital.hospitalId}
       name={hospital.name}

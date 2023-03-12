@@ -11,6 +11,7 @@ const Home = () => {
   return (
     <div className="flex">
       <Navbar />
+      <h1>Home Page Landing</h1>
     </div>
   );
 };

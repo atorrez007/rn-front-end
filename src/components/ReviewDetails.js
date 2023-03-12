@@ -29,12 +29,21 @@ const ReviewDetails = () => {
             </div>
             <div className="border p-1">
               <h1>
-                Shift: <strong>{review.shift}</strong>
+                Shift:
+                <strong>
+                  <ul>
+                    {review.shift?.map((item, index) => (
+                      <li key={index}>
+                        <strong>{item}</strong>
+                      </li>
+                    ))}
+                  </ul>
+                </strong>
               </h1>
             </div>
             <div className="border p-1">
               <h1>
-                Nurse/Patient Ratio: <strong>{review.specialty}</strong>
+                Nurse/Patient Ratio: <strong>{review.nurseRatio}</strong>
               </h1>
             </div>
             <div className="border p-1">
@@ -49,10 +58,10 @@ const ReviewDetails = () => {
             </div>
             <div className="border p-1">
               <h1>
-                Dinning Options:{" "}
+                Dinning Options:
                 <ul>
-                  {review.dinning?.map((item) => (
-                    <li>
+                  {review.dinning?.map((item, index) => (
+                    <li key={index}>
                       <strong>{item}</strong>
                     </li>
                   ))}
