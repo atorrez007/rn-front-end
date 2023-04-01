@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getHospitals } from "../redux/hospitalReducer";
+import { getAllHospitals, getHospitals } from "../redux/hospitalReducer";
 import HospitalCard from "./HospitalCard";
 import Navbar from "./Navbar";
 
@@ -8,16 +8,21 @@ import Navbar from "./Navbar";
 const Search = () => {
   const dispatch = useDispatch();
   const hospitalState = useSelector((state) => state.hospitals.hospitals);
+
   const [rawData, setRawData] = useState([]);
-  const [hospitalData, setHospitalData] = useState([]);
+  // const [hospitalData, setHospitalData] = useState([]);
   const [page, setPage] = useState("1");
   const [state, setState] = useState("AK");
-  const [rawQuery, setRawQuery] = useState(false);
+  // const [rawQuery, setRawQuery] = useState(false);
   const handleStateChange = (e) => {
     setState(e.target.value);
   };
 
   const url = `http://localhost:8000/hospitals?page=${page}&state=${state}`;
+
+  useEffect(() => {
+    dispatch(getAllHospitals());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getHospitals(url));
@@ -30,22 +35,45 @@ const Search = () => {
   //     .then((data) => setHospitalData(data));
   // }, [page, state]);
 
+  // This is a query without redux. Will replace with new redux call.
   useEffect(() => {
     fetch(`http://localhost:8000/hospitals?allHospitals=true`)
       .then((res) => res.json())
-      .then((data) => setRawData(data));
-  }, []);
+      .then((data) => {
+        setRawData(data);
+        // dispatch(getHospitals(url)); // dispatching after getting all data
+      });
+  }, [dispatch, url]);
 
-  const uniqueCities = rawData
+  // const uniqueCities = rawData
+  //   .map((hospital) => hospital.city)
+  //   .filter((city, index, arr) => {
+  //     return arr.indexOf(city) === index;
+  //   })
+  //   .sort();
+
+  // const uniqueCities = [
+  //   ...new Set(hospitalState.map((hospital) => hospital.city)),
+  // ];
+
+  // const citiesFiltered = uniqueCities.map((city, index) => {
+  //   return <option key={index}>{city}</option>;
+  // });
+  const citiesFiltered = rawData
+    .filter((hospital) => hospital.state === state)
     .map((hospital) => hospital.city)
     .filter((city, index, arr) => {
       return arr.indexOf(city) === index;
     })
-    .sort();
+    .sort()
+    .map((city, index) => {
+      return <option key={index}>{city}</option>;
+    });
 
-  const citiesFiltered = uniqueCities.map((city, index) => {
-    return <option key={index}>{city}</option>;
-  });
+  // The only problem with this is that I'm querying only the first page.
+  // const citiesFiltered = uniqueCities.map((city, index) => (
+  //   <option key={index}>{city}</option>
+  // ));
 
   const uniqueStates = rawData
     .map((hospital) => hospital.state)

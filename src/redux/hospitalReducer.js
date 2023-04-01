@@ -8,8 +8,21 @@ export function getHospitals(newUrl) {
   };
 }
 
+export function getAllHospitals() {
+  return (dispatch) => {
+    fetch(`http://localhost:8000/hospitals?allHospitals=true`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        dispatch({ type: "GET_ALL_HOSPITALS", allHospitals: data });
+      });
+  };
+}
 const initialState = {
+  allHospitals: [],
   hospitals: [],
+  loading: false,
+  error: null,
 };
 
 export default function hospitalReducer(state = initialState, action) {
@@ -17,6 +30,11 @@ export default function hospitalReducer(state = initialState, action) {
     case "GET_HOSPITALS":
       return {
         hospitals: action.hospitals,
+      };
+    case "GET_ALL_HOSPITALS":
+      return {
+        ...state,
+        allHospitals: action.allHospitals,
       };
     default:
       return state;
