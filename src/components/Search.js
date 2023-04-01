@@ -7,9 +7,16 @@ import Navbar from "./Navbar";
 // Previously the <Link> was used to wrap all the hospitals in a link, but now the link is entered into the hospital card component. If we want to change accessibility to allow clicking anywhere on the card, we can revert to putting the link in the hospitalData.map once again.
 const Search = () => {
   const dispatch = useDispatch();
-  const hospitalState = useSelector((state) => state.hospitals.hospitals);
+  const allHospitalsState = useSelector(
+    (state) => state.hospitals.allHospitals
+  );
 
+  const hospitalState = useSelector((state) => state.hospitals.hospitals);
   const [rawData, setRawData] = useState([]);
+
+  // allHospitals query to be used later
+  const [fullList, setFullList] = useState([]);
+
   // const [hospitalData, setHospitalData] = useState([]);
   const [page, setPage] = useState("1");
   const [state, setState] = useState("AK");
@@ -23,6 +30,10 @@ const Search = () => {
   useEffect(() => {
     dispatch(getAllHospitals());
   }, [dispatch]);
+
+  useEffect(() => {
+    setFullList(allHospitalsState);
+  }, [allHospitalsState]);
 
   useEffect(() => {
     dispatch(getHospitals(url));
@@ -59,16 +70,6 @@ const Search = () => {
   // const citiesFiltered = uniqueCities.map((city, index) => {
   //   return <option key={index}>{city}</option>;
   // });
-  const citiesFiltered = rawData
-    .filter((hospital) => hospital.state === state)
-    .map((hospital) => hospital.city)
-    .filter((city, index, arr) => {
-      return arr.indexOf(city) === index;
-    })
-    .sort()
-    .map((city, index) => {
-      return <option key={index}>{city}</option>;
-    });
 
   // The only problem with this is that I'm querying only the first page.
   // const citiesFiltered = uniqueCities.map((city, index) => (
@@ -89,6 +90,42 @@ const Search = () => {
       </option>
     );
   });
+
+  const citiesFiltered = rawData
+    .filter((hospital) => hospital.state === state)
+    .map((hospital) => hospital.city)
+    .filter((city, index, arr) => {
+      return arr.indexOf(city) === index;
+    })
+    .sort()
+    .map((city, index) => {
+      return <option key={index}>{city}</option>;
+    });
+
+  // Redux allHospitals call to populate search state and city options
+  // const otherUniqueStates = fullList
+  //   ?.map((hospital) => hospital.state)
+  //   .filter((state, index, arr) => {
+  //     return arr.indexOf(state) === index;
+  //   })
+  //   .sort();
+
+  // const otherStatesFiltered = otherUniqueStates?.map((item, index) => {
+  //   return (
+  //     <option key={index} value={item}>
+  //       {item}
+  //     </option>
+  //   );
+  // });
+
+  // const otherCitiesFiltered = fullList
+  //   ? fullList
+  //       .filter((hospital) => hospital.state === state)
+  //       .map((hospital) => hospital.city)
+  //       .filter((city, index, arr) => {
+  //         return arr.indexOf(city) === index;
+  //       })
+  //   : null;
 
   const hospitals = hospitalState.map((hospital) => (
     <HospitalCard
@@ -115,7 +152,7 @@ const Search = () => {
             <label className="p-4 h-12 rounded text-center"></label>
             <select className="" onChange={handleStateChange}>
               <option value="AL">Choose a State</option>
-              {statesFiltered}
+              {statesFiltered ? statesFiltered : null}
             </select>
           </div>
           <div className="absolute top-4 right-3">
@@ -125,7 +162,7 @@ const Search = () => {
             <label className="p-4 h-12 rounded text-center"></label>
             <select>
               <option>Choose a City</option>
-              {citiesFiltered}
+              {citiesFiltered ? citiesFiltered : null}
             </select>
           </div>
           <div className="absolute top-4 right-3">
@@ -134,7 +171,9 @@ const Search = () => {
         </div>
         {/* <button onClick={changePage}>Page 2</button> */}
         <div className="mx-auto max-w-6xl">
-          <div className="grid grid-cols-3 gap-10">{hospitals}</div>
+          <div className="grid grid-cols-3 gap-10">
+            {hospitals ? hospitals : null}
+          </div>
         </div>
       </div>
     </div>

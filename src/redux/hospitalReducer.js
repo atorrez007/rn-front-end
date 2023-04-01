@@ -13,7 +13,6 @@ export function getAllHospitals() {
     fetch(`http://localhost:8000/hospitals?allHospitals=true`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         dispatch({ type: "GET_ALL_HOSPITALS", allHospitals: data });
       });
   };
