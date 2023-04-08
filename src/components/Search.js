@@ -46,12 +46,18 @@ const Search = () => {
   // const [fullList, setFullList] = useState([]);
   const [page, setPage] = useState("");
   const [state, setState] = useState("");
+  const [city, setCity] = useState("");
 
   const handleStateChange = (e) => {
+    setCity("");
     setState(e.target.value);
   };
 
-  const url = `http://localhost:8000/hospitals?page=${page}&state=${state}`;
+  const handleCityChange = (e) => {
+    setCity(e.target.value);
+  };
+
+  const url = `http://localhost:8000/hospitals?page=${page}&state=${state}&city=${city}`;
 
   useEffect(() => {
     dispatch(getAllHospitals());
@@ -180,8 +186,8 @@ const Search = () => {
           </div>
           <div className="">
             <label className="p-4 h-12 rounded text-center"></label>
-            <select>
-              <option>Choose a City</option>
+            <select onChange={handleCityChange}>
+              <option value="">Choose a City</option>
               {citiesFiltered ? citiesFiltered : null}
             </select>
           </div>
