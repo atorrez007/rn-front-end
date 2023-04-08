@@ -47,6 +47,7 @@ const Search = () => {
   const [page, setPage] = useState("");
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
 
   const handleStateChange = (e) => {
     setCity("");
@@ -54,6 +55,7 @@ const Search = () => {
   };
 
   const handleCityChange = (e) => {
+    setSelectedCity(e.target.value);
     setCity(e.target.value);
   };
 
@@ -124,8 +126,18 @@ const Search = () => {
     })
     .sort()
     .map((city, index) => {
-      return <option key={index}>{city}</option>;
+      return (
+        <option city={city} value={city} key={index + 1}>
+          {city}
+        </option>
+      );
     });
+
+  citiesFiltered.unshift(
+    <option value="Choose a City" key={0}>
+      Choose a City
+    </option>
+  );
 
   // Redux allHospitals call to populate search state and city options
   // const otherUniqueStates = fullList
@@ -186,8 +198,7 @@ const Search = () => {
           </div>
           <div className="">
             <label className="p-4 h-12 rounded text-center"></label>
-            <select onChange={handleCityChange}>
-              <option value="">Choose a City</option>
+            <select value={selectedCity} onChange={handleCityChange}>
               {citiesFiltered ? citiesFiltered : null}
             </select>
           </div>
