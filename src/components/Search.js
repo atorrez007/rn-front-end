@@ -13,6 +13,7 @@ const Search = () => {
   // );
   // const [resetPage, setResetPage] = useState(1);
   const hospitalCount = useSelector((state) => state.hospitals.hospitals.count);
+  const hospitalState = useSelector((state) => state.hospitals.hospitals.data);
 
   const numOfPages = Math.ceil(hospitalCount / 12);
 
@@ -24,23 +25,6 @@ const Search = () => {
     setPage(page);
   };
 
-  // const listedPages = pageNumbers.map((page) => {
-  //   return (
-  //     <li key={page}>
-  //       <p
-  //         onClick={handlePageChange}
-  //         className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-  //       >
-  //         {page}
-  //       </p>
-  //     </li>
-  //   );
-  // });
-
-  const hospitalState = useSelector((state) => state.hospitals.hospitals.data);
-  // console.log(hospitalState);
-  // console.log(hospitalState);
-
   const [rawData, setRawData] = useState([]);
   // allHospitals query to be used later
   // const [fullList, setFullList] = useState([]);
@@ -48,7 +32,10 @@ const Search = () => {
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [query, setQuery] = useState("");
 
+  // Set State and City handlers.
   const handleStateChange = (e) => {
     setCity("");
     setState(e.target.value);
@@ -59,7 +46,19 @@ const Search = () => {
     setCity(e.target.value);
   };
 
-  const url = `http://localhost:8000/hospitals?page=${page}&state=${state}&city=${city}`;
+  // Search term handler
+  const handleSearchTermChange = (e) => {
+    const string = e.target.value;
+    setSearchTerm(string);
+  };
+  const setSearchQuery = (e) => {
+    e.preventDefault();
+
+    setQuery(searchTerm);
+  };
+  // url sent to Redux for backend query
+  // add query to string.
+  const url = `http://localhost:8000/hospitals?page=${page}&state=${state}&city=${city}&query=${query}`;
 
   useEffect(() => {
     dispatch(getAllHospitals());
@@ -101,8 +100,7 @@ const Search = () => {
   //   <option key={index}>{city}</option>
   // ));
 
-  // Rely on Raw Data
-
+  // Raw data query to populate states and cities in search bar.
   const uniqueStates = rawData
     .map((hospital) => hospital.state)
     .filter((state, index, arr) => {
@@ -180,12 +178,15 @@ const Search = () => {
       <Navbar />
       <div className="p-11  w-full border-black border-solid">
         <div className="bg-blizzard-800 border-2 border-white rounded h-10 py-8 mb-10 flex justify-center items-center px-4 sm:px-6 lg:px-8">
-          {/* <Pages listedPages={listedPages} /> */}
-          <input
-            type="text"
-            className="h-14 w-96 pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none"
-            placeholder="Search anything..."
-          />
+          <form onSubmit={setSearchQuery}>
+            <input
+              onChange={handleSearchTermChange}
+              value={searchTerm}
+              type="text"
+              className="h-14 w-96 pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none"
+              placeholder="Search anything..."
+            />
+          </form>
           <div className="">
             <label className="p-4 h-12 rounded text-center"></label>
             <select className="" onChange={handleStateChange}>
@@ -206,7 +207,6 @@ const Search = () => {
             <i className="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
           </div>
         </div>
-        {/* <button onClick={changePage}>Page 2</button> */}
         <div className="mx-auto max-w-6xl">
           <div className="grid grid-cols-3 gap-10">
             {hospitals ? hospitals : null}
