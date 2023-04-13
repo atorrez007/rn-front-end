@@ -4,6 +4,7 @@ import { getAllHospitals, getHospitals } from "../redux/hospitalReducer";
 import HospitalCard from "./HospitalCard";
 import Navbar from "./Navbar";
 import Pages from "./Pages";
+import { Button, Box } from "@chakra-ui/react";
 
 // Previously the <Link> was used to wrap all the hospitals in a link, but now the link is entered into the hospital card component. If we want to change accessibility to allow clicking anywhere on the card, we can revert to putting the link in the hospitalData.map once again.
 const Search = () => {
@@ -32,13 +33,24 @@ const Search = () => {
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  const [selectedState, setSelectedState] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [query, setQuery] = useState("");
 
   // Set State and City handlers.
   const handleStateChange = (e) => {
     setCity("");
+    setSelectedState(e.target.value);
     setState(e.target.value);
+  };
+
+  const resetSearchParams = () => {
+    setSearchTerm("");
+    setCity("");
+    setState("");
+    setSelectedState("");
+    setQuery("");
+    setPage("");
   };
 
   const handleCityChange = (e) => {
@@ -49,6 +61,7 @@ const Search = () => {
   // Search term handler
   const handleSearchTermChange = (e) => {
     const string = e.target.value;
+    // What is this searchTerm we're setting used for? Do we need it?
     setSearchTerm(string);
   };
   const setSearchQuery = (e) => {
@@ -110,11 +123,17 @@ const Search = () => {
 
   const statesFiltered = uniqueStates.map((item, index) => {
     return (
-      <option key={index} value={item}>
+      <option key={index + 1} value={item}>
         {item}
       </option>
     );
   });
+
+  statesFiltered.unshift(
+    <option value="Choose a State" key={0}>
+      Choose a State
+    </option>
+  );
 
   const citiesFiltered = rawData
     .filter((hospital) => hospital.state === state)
@@ -178,7 +197,7 @@ const Search = () => {
       <Navbar />
       <div className="p-11  w-full border-black border-solid">
         <div className="bg-blizzard-800 border-2 border-white rounded h-10 py-8 mb-10 flex justify-center items-center px-4 sm:px-6 lg:px-8">
-          <form onSubmit={setSearchQuery}>
+          <form onChange={setSearchQuery} onSubmit={setSearchQuery}>
             <input
               onChange={handleSearchTermChange}
               value={searchTerm}
@@ -189,8 +208,7 @@ const Search = () => {
           </form>
           <div className="">
             <label className="p-4 h-12 rounded text-center"></label>
-            <select className="" onChange={handleStateChange}>
-              <option value="AL">Choose a State</option>
+            <select value={selectedState} onChange={handleStateChange}>
               {statesFiltered ? statesFiltered : null}
             </select>
           </div>
@@ -203,6 +221,11 @@ const Search = () => {
               {citiesFiltered ? citiesFiltered : null}
             </select>
           </div>
+          <Box ml="8">
+            <Button colorScheme="yellow" onClick={resetSearchParams}>
+              Reset Search
+            </Button>
+          </Box>
           <div className="absolute top-4 right-3">
             <i className="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
           </div>
