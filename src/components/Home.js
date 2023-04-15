@@ -1,6 +1,5 @@
 import React from "react";
-
-import Navbar from "./Navbar";
+import HomeNavbar from "./HomeNavbar";
 
 // 3 quadrants.
 // 1. Top page explains the about.
@@ -9,9 +8,8 @@ import Navbar from "./Navbar";
 
 const Home = () => {
   return (
-    <div className="flex">
-      <Navbar />
-      <h1>Home Page Landing</h1>
+    <div>
+      <HomeNavbar />
     </div>
   );
 };
