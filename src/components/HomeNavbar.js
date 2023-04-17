@@ -1,11 +1,16 @@
 import React from "react";
-import { Box, Button, Flex, Input, Spacer } from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Input, Spacer } from "@chakra-ui/react";
+import mainLogo from "../assets/RN-reviews now.png";
+import { useAuth0 } from "@auth0/auth0-react";
+import Profile from "./Profile";
 
 const HomeNavbar = () => {
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { loginWithRedirect } = useAuth0();
+  const { logout } = useAuth0();
   return (
     <Flex
-      bg="#737373;
-    "
+      bg="#737373"
       w="auto"
       h="150px"
       p="3"
@@ -13,15 +18,65 @@ const HomeNavbar = () => {
       borderRadius="10"
       borderColor="black"
     >
-      <Box mt="8">
+      <Profile />
+      {/* <Spacer /> */}
+      {isAuthenticated ? (
+        <Box mt="8">
+          <Button
+            onClick={() => {
+              logout({ returnTo: window.location.origin });
+            }}
+            rounded="3xl"
+            ml="55px"
+            mr="10"
+            colorScheme="red"
+            boxShadow="dark-lg"
+            _hover={{ background: "gray.600" }}
+            _active={{ background: "whitesmoke", color: "black" }}
+          >
+            Logout
+          </Button>
+        </Box>
+      ) : (
+        <Box mt="8">
+          <Button
+            onClick={() => {
+              loginWithRedirect();
+            }}
+            ml="120px"
+            mr="10"
+            colorScheme="red"
+            rounded="3xl"
+            boxShadow="dark-lg"
+            _hover={{ background: "gray.600" }}
+            _active={{ background: "whitesmoke", color: "black" }}
+          >
+            Log in
+          </Button>
+          {/* <Button
+            rounded="3xl"
+            mr="1"
+            colorScheme="red"
+            boxShadow="dark-lg"
+            _hover={{ background: "gray.600" }}
+            _active={{ background: "whitesmoke", color: "black" }}
+          >
+            Sign up
+          </Button> */}
+        </Box>
+      )}
+      {/* <Box mt="8">
         <Button
-          // borderRadius="100"
+          onClick={() => {
+            loginWithRedirect();
+          }}
           ml="120px"
           mr="10"
           colorScheme="red"
           rounded="3xl"
           boxShadow="dark-lg"
-          _hover={{ color: "gray.800" }}
+          _hover={{ background: "gray.600" }}
+          _active={{ background: "whitesmoke", color: "black" }}
         >
           Log in
         </Button>
@@ -30,12 +85,21 @@ const HomeNavbar = () => {
           mr="1"
           colorScheme="red"
           boxShadow="dark-lg"
-          _hover={{ color: "gray.800" }}
+          _hover={{ background: "gray.600" }}
+          _active={{ background: "whitesmoke", color: "black" }}
         >
           Sign up
         </Button>
-      </Box>
+      </Box> */}
+
       <Spacer />
+
+      <Box w="649px" h="-140px">
+        <Image alt="RN-Logo" src={mainLogo} w="649px" h="138px" />
+      </Box>
+
+      <Spacer />
+
       <Input
         _hover={{ boxShadow: "dark-lg" }}
         _focus={{ boxShadow: "dark-lg" }}
