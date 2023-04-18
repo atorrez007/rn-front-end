@@ -1,5 +1,5 @@
 export function getHospitals(newUrl) {
-  return (dispatch) => {
+  return async (dispatch) => {
     fetch(`${newUrl}`)
       .then((res) => res.json())
       .then((data) => {

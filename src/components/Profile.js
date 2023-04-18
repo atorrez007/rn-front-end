@@ -1,22 +1,10 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
-import {
-  Avatar,
-  Box,
-  Button,
-  Text,
-  Wrap,
-  WrapItem,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  AvatarBadge,
-} from "@chakra-ui/react";
+
+import { Avatar, Box, Text, Wrap, WrapItem } from "@chakra-ui/react";
 
 const Profile = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
 
   return (
     isAuthenticated && (
@@ -24,28 +12,6 @@ const Profile = () => {
         <Wrap>
           <WrapItem>
             <Avatar name={user.name} src={user.picture} size="lg"></Avatar>
-            {/* <Menu>
-              {({ isOpen }) => (
-                <>
-                  <MenuButton
-                    isActive={isOpen}
-                    as={Button}
-                    rightIcon={<ChevronDownIcon />}
-                  >
-                    {isOpen ? "Close" : "Open"}
-                  </MenuButton>
-                  <MenuList>
-                    <MenuItem
-                      onClick={() => {
-                        alert("logout");
-                      }}
-                    >
-                      Logout
-                    </MenuItem>
-                  </MenuList>
-                </>
-              )}
-            </Menu> */}
           </WrapItem>
         </Wrap>
         <Text>

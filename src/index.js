@@ -18,6 +18,7 @@ root.render(
         domain={domain}
         clientId={clientId}
         authorizationParams={{
+          audience: "RN site identifier ",
           redirect_uri: window.location.origin,
         }}
       >

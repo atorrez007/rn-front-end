@@ -1,13 +1,36 @@
 import React from "react";
+import axios from "axios";
 import { Box, Button, Flex, Image, Input, Spacer } from "@chakra-ui/react";
 import mainLogo from "../assets/RN-reviews now.png";
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Profile";
 
 const HomeNavbar = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
-  const { loginWithRedirect } = useAuth0();
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { loginWithPopup } = useAuth0();
   const { logout } = useAuth0();
+
+  const fetchRequest = async () => {
+    try {
+      const token = await getAccessTokenSilently();
+      console.log(token);
+
+      // const response = await axios.get("http://localhost:8000/getHospitals");
+
+      const response = await axios.get("http://localhost:8000/testing", {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+
+    // const jsonData = await response.json();
+    // console.log(jsonData);
+  };
   return (
     <Flex
       bg="#737373"
@@ -36,12 +59,19 @@ const HomeNavbar = () => {
           >
             Logout
           </Button>
+          <Button
+            onClick={() => {
+              fetchRequest();
+            }}
+          >
+            Get Hospitals
+          </Button>
         </Box>
       ) : (
         <Box mt="8">
           <Button
             onClick={() => {
-              loginWithRedirect();
+              loginWithPopup();
             }}
             ml="120px"
             mr="10"
@@ -52,6 +82,13 @@ const HomeNavbar = () => {
             _active={{ background: "whitesmoke", color: "black" }}
           >
             Log in
+          </Button>
+          <Button
+            onClick={() => {
+              fetchRequest();
+            }}
+          >
+            Get Hospitals
           </Button>
           {/* <Button
             rounded="3xl"
