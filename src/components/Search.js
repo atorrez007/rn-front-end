@@ -5,16 +5,17 @@ import HospitalCard from "./HospitalCard";
 import Navbar from "./Navbar";
 import Pages from "./Pages";
 import { Button, Box } from "@chakra-ui/react";
-
+// import { useAuth0 } from "@auth0/auth0-react";
 // Previously the <Link> was used to wrap all the hospitals in a link, but now the link is entered into the hospital card component. If we want to change accessibility to allow clicking anywhere on the card, we can revert to putting the link in the hospitalData.map once again.
 const Search = () => {
   const dispatch = useDispatch();
-  // const allHospitalsState = useSelector(
-  //   (state) => state.hospitals.allHospitals
-  // );
+  const allHospitals = useSelector((state) => state.hospitals.allHospitals);
   // const [resetPage, setResetPage] = useState(1);
   const hospitalCount = useSelector((state) => state.hospitals.hospitals.count);
   const hospitalState = useSelector((state) => state.hospitals.hospitals.data);
+
+  const currentUrl = useSelector((state) => state.hospitals.currentUrl);
+  // console.log(currentUrl);
 
   const numOfPages = Math.ceil(hospitalCount / 12);
 
@@ -26,7 +27,7 @@ const Search = () => {
     setPage(page);
   };
 
-  const [rawData, setRawData] = useState([]);
+  // const [rawData, setRawData] = useState([]);
   // allHospitals query to be used later
   // const [fullList, setFullList] = useState([]);
   const [page, setPage] = useState("");
@@ -36,7 +37,8 @@ const Search = () => {
   const [selectedState, setSelectedState] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [query, setQuery] = useState("");
-
+  // const { getAccessTokenSilently } = useAuth0();
+  // You can access auth0 token from almost anywhere by calling this method in your functions.
   // Set State and City handlers.
   const handleStateChange = (e) => {
     setCity("");
@@ -73,25 +75,70 @@ const Search = () => {
   // add query to string.
   const url = `http://localhost:8000/hospitals?page=${page}&state=${state}&city=${city}&query=${query}`;
 
-  useEffect(() => {
-    dispatch(getAllHospitals());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       dispatch(getAllHospitals());
+  //       setRawData(allHospitals);
+  //     } catch (error) {
+  //       console.error(`React error ${error}`);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [dispatch, allHospitals]);
 
   useEffect(() => {
-    dispatch(getHospitals(url));
+    const fetchData = async () => {
+      try {
+        await dispatch(getAllHospitals()); // Wait for the API call to complete before proceeding
+      } catch (error) {
+        console.error(`React error ${error}`);
+      }
+    };
+
+    fetchData();
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   if (allHospitals.length > 0) {
+  //     setRawData(allHospitals);
+  //   }
+  // }, [allHospitals]);
+
+  useEffect(() => {
+    const fetchHospitalData = async () => {
+      try {
+        dispatch(getHospitals(url));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchHospitalData();
     // setResetPage(1);
   }, [dispatch, url]);
 
   // This is a query without redux. Will replace with new redux call.
-  useEffect(() => {
-    fetch(`http://localhost:8000/hospitals?allHospitals=true`)
-      .then((res) => res.json())
-      .then((hospitals) => {
-        setRawData(hospitals.data);
-        // console.log(hospitals.data);
-        // dispatch(getHospitals(url)); // dispatching after getting all data
-      });
-  }, [dispatch, url]);
+  // useEffect(() => {
+  //   fetch(`http://localhost:8000/hospitals?allHospitals=true`)
+  //     .then((res) => res.json())
+  //     .then((hospitals) => {
+  //       setRawData(hospitals.data);
+  //       console.log(rawData);
+  //       // console.log(hospitals.data);
+  //       // dispatch(getHospitals(url)); // dispatching after getting all data
+  //     });
+  // }, [dispatch, url]);
+
+  // useEffect(() => {
+  //   // dispatch(getAllHospitals());
+  //   // setRawData(allHospitals.data);
+  //   const fetchAllHospitalData = async () => {
+  //     const allHospitalData = dispatch(getAllHospitals());
+  //     setRawData(allHospitalData.data);
+  //   };
+  //   fetchAllHospitalData();
+  // }, [dispatch, allHospitals]);
 
   // const uniqueCities = rawData
   //   ?.map((hospital) => hospital.city)
@@ -114,47 +161,92 @@ const Search = () => {
   // ));
 
   // Raw data query to populate states and cities in search bar.
-  const uniqueStates = rawData
-    .map((hospital) => hospital.state)
-    .filter((state, index, arr) => {
-      return arr.indexOf(state) === index;
-    })
-    .sort();
+  let statesFiltered;
+  let citiesFiltered;
 
-  const statesFiltered = uniqueStates.map((item, index) => {
-    return (
-      <option key={index + 1} value={item}>
-        {item}
-      </option>
-    );
-  });
-
-  statesFiltered.unshift(
-    <option value="Choose a State" key={0}>
-      Choose a State
-    </option>
-  );
-
-  const citiesFiltered = rawData
-    .filter((hospital) => hospital.state === state)
-    .map((hospital) => hospital.city)
-    .filter((city, index, arr) => {
-      return arr.indexOf(city) === index;
-    })
-    .sort()
-    .map((city, index) => {
+  if (allHospitals.data) {
+    const uniqueStates = allHospitals.data
+      .map((hospital) => hospital.state)
+      .filter((state, index, arr) => {
+        return arr.indexOf(state) === index;
+      })
+      .sort();
+    statesFiltered = uniqueStates.map((item, index) => {
       return (
-        <option city={city} value={city} key={index + 1}>
-          {city}
+        <option key={index + 1} value={item}>
+          {item}
         </option>
       );
     });
 
-  citiesFiltered.unshift(
-    <option value="Choose a City" key={0}>
-      Choose a City
-    </option>
-  );
+    statesFiltered.unshift(
+      <option value="Choose a State" key={0}>
+        Choose a State
+      </option>
+    );
+
+    citiesFiltered = allHospitals.data
+      .filter((hospital) => hospital.state === state)
+      .map((hospital) => hospital.city)
+      .filter((city, index, arr) => {
+        return arr.indexOf(city) === index;
+      })
+      .sort()
+      .map((city, index) => {
+        return (
+          <option city={city} value={city} key={index + 1}>
+            {city}
+          </option>
+        );
+      });
+
+    citiesFiltered.unshift(
+      <option value="Choose a City" key={0}>
+        Choose a City
+      </option>
+    );
+  }
+  // const uniqueStates = allHospitals.data
+  //   .map((hospital) => hospital.state)
+  //   .filter((state, index, arr) => {
+  //     return arr.indexOf(state) === index;
+  //   })
+  //   .sort();
+
+  // const statesFiltered = uniqueStates.map((item, index) => {
+  //   return (
+  //     <option key={index + 1} value={item}>
+  //       {item}
+  //     </option>
+  //   );
+  // });
+
+  // statesFiltered.unshift(
+  //   <option value="Choose a State" key={0}>
+  //     Choose a State
+  //   </option>
+  // );
+
+  // const citiesFiltered = allHospitals.data
+  //   .filter((hospital) => hospital.state === state)
+  //   .map((hospital) => hospital.city)
+  //   .filter((city, index, arr) => {
+  //     return arr.indexOf(city) === index;
+  //   })
+  //   .sort()
+  //   .map((city, index) => {
+  //     return (
+  //       <option city={city} value={city} key={index + 1}>
+  //         {city}
+  //       </option>
+  //     );
+  //   });
+
+  // citiesFiltered.unshift(
+  //   <option value="Choose a City" key={0}>
+  //     Choose a City
+  //   </option>
+  // );
 
   // Redux allHospitals call to populate search state and city options
   // const otherUniqueStates = fullList
@@ -209,7 +301,7 @@ const Search = () => {
           <div className="">
             <label className="p-4 h-12 rounded text-center"></label>
             <select value={selectedState} onChange={handleStateChange}>
-              {statesFiltered ? statesFiltered : null}
+              {allHospitals.data ? statesFiltered : null}
             </select>
           </div>
           <div className="absolute top-4 right-3">
@@ -218,7 +310,7 @@ const Search = () => {
           <div className="">
             <label className="p-4 h-12 rounded text-center"></label>
             <select value={selectedCity} onChange={handleCityChange}>
-              {citiesFiltered ? citiesFiltered : null}
+              {allHospitals.data ? citiesFiltered : null}
             </select>
           </div>
           <Box ml="8">

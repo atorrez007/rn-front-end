@@ -1,4 +1,5 @@
 import React from "react";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Box, Button, Flex, Image, Input, Spacer } from "@chakra-ui/react";
 import mainLogo from "../assets/RN-reviews now.png";
@@ -6,14 +7,23 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Profile";
 
 const HomeNavbar = () => {
+  // const navigate = useNavigate();
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const { loginWithPopup } = useAuth0();
   const { logout } = useAuth0();
 
+  const loginFunc = async () => {
+    await loginWithPopup();
+  };
+
+  const logoutFunc = () => {
+    logout({ returnTo: window.location.origin });
+  };
+
   const fetchRequest = async () => {
     try {
       const token = await getAccessTokenSilently();
-      console.log(token);
+      // console.log(token);
 
       // const response = await axios.get("http://localhost:8000/getHospitals");
 
@@ -25,7 +35,7 @@ const HomeNavbar = () => {
 
       console.log(response.data);
     } catch (err) {
-      console.log(err);
+      console.log(`Error message: ${err}`);
     }
 
     // const jsonData = await response.json();
@@ -47,7 +57,7 @@ const HomeNavbar = () => {
         <Box mt="8">
           <Button
             onClick={() => {
-              logout({ returnTo: window.location.origin });
+              logoutFunc();
             }}
             rounded="3xl"
             ml="55px"
@@ -71,7 +81,8 @@ const HomeNavbar = () => {
         <Box mt="8">
           <Button
             onClick={() => {
-              loginWithPopup();
+              // loginWithPopup();
+              loginFunc();
             }}
             ml="120px"
             mr="10"

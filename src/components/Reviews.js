@@ -1,34 +1,69 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
+import { Box, Button } from "@chakra-ui/react";
+import axios from "axios";
+import { getHospitals } from "../redux/hospitalReducer";
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const { hospitalId } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const currentUrl = useSelector((state) => state.hospitals.currentUrl);
+  // console.log(currentUrl);
+
   // const { reviewId } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:8000/hospitals/${hospitalId}/reviews`)
-      .then((res) => res.json())
-      .then((data) => setReviews(data[0].reviews));
+    axios
+      .get(`http://localhost:8000/hospitals/${hospitalId}/reviews`)
+      .then((response) => {
+        setReviews(response.data[0].reviews);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [hospitalId]);
+
+  const handleReviewChange = (reviewId) => {
+    navigate(`/search/${hospitalId}/${reviewId}`);
+  };
+
+  const handleBackClick = () => {
+    navigate(`/search`);
+    dispatch(getHospitals(currentUrl));
+  };
 
   const reviewBreakdown = reviews.map((review) => {
     return (
+      // <Link key={review._id} to={`/search/${hospitalId}/${review._id}`}>
       <tr
         key={review._id}
         className="bg-slate-400 flex p-2 w-full h-[66%] items-center border border-black"
+        onClick={() => {
+          handleReviewChange(review._id);
+        }}
       >
-        <td>
-          <Link to={`/search/${hospitalId}/${review._id}`}>
-            {review.overallScore}
-          </Link>
-        </td>
+        <td>{review.overallScore}</td>
       </tr>
+      // </Link>
     );
   });
 
   return (
     <div>
+      <Box as="div" pb="2">
+        <Button
+          colorScheme="yellow"
+          onClick={() => {
+            handleBackClick();
+          }}
+        >
+          Back
+        </Button>
+      </Box>
       <table className="table-auto w-full bg-slate-300 border">
         <thead>
           <tr className="bg-slate-200 flex border">
@@ -37,7 +72,6 @@ const Reviews = () => {
           </tr>
         </thead>
         <tbody className="">{reviewBreakdown}</tbody>
-        {/* <td>{reviewBreakdown ? reviewBreakdown : null}</td> */}
       </table>
     </div>
   );
