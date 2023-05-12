@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 const Pages = ({ handlePageChange, state }) => {
   const hospitalCount = useSelector((state) => state.hospitals.hospitals.count);
   const [currentPage, setCurrentPage] = useState(1);
-  // const [resetPage] = useState(1);
 
   const numOfPages = Math.ceil(hospitalCount / 12);
   const pageNumbers = [];
@@ -16,28 +15,70 @@ const Pages = ({ handlePageChange, state }) => {
     handlePageChange(1);
     setCurrentPage(1);
   }, [state]);
-  // const firstPage = pageNumbers[pageNumbers.length + 1];
-  // console.log(firstPage);
-  // const lastPage = [pageNumbers[pageNumbers.length - 1]];
 
-  const listedPages = pageNumbers.map((page) => {
-    return (
-      <li
-        key={page}
-        onClick={() => {
-          handlePageChange(page);
-          setCurrentPage(page);
-        }}
-      >
-        <p className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+  let listedPages;
+  if (numOfPages <= 10) {
+    // Display all pages if there are 10 or fewer
+    listedPages = pageNumbers.map((page) => {
+      return (
+        <li
+          key={page}
+          onClick={() => {
+            handlePageChange(page);
+            setCurrentPage(page);
+          }}
+          className={`px-3 py-2 leading-tight border ${
+            currentPage === page ? "bg-gray-200" : "bg-white"
+          }`}
+        >
           {page}
-        </p>
-      </li>
-    );
-  });
+        </li>
+      );
+    });
+  } else {
+    // Display up to 10 pages, with ellipsis if there are more
+    let startIndex = Math.max(currentPage - 5, 1);
+    let endIndex = Math.min(startIndex + 9, numOfPages);
+    if (endIndex === numOfPages) {
+      startIndex = Math.max(endIndex - 9, 1);
+    }
+
+    const pagesToDisplay = pageNumbers.slice(startIndex - 1, endIndex);
+    listedPages = pagesToDisplay.map((page) => {
+      return (
+        <li
+          key={page}
+          onClick={() => {
+            handlePageChange(page);
+            setCurrentPage(page);
+          }}
+          className={`px-3 py-2 leading-tight border ${
+            currentPage === page ? "bg-gray-200" : "bg-white"
+          }`}
+        >
+          {page}
+        </li>
+      );
+    });
+
+    if (startIndex > 1) {
+      listedPages.unshift(
+        <li key="ellipsis-start" className="px-3 py-2 leading-tight border">
+          ...
+        </li>
+      );
+    }
+    if (endIndex < numOfPages) {
+      listedPages.push(
+        <li key="ellipsis-end" className="px-3 py-2 leading-tight border">
+          ...
+        </li>
+      );
+    }
+  }
 
   return (
-    <div className=" m-8 py-4 mr-8  text-center">
+    <div className=" m-4 py-4 mr-4  text-center max-w-full">
       <nav aria-label="">
         <ul className="inline-flex items-center -space-x-px">
           <button

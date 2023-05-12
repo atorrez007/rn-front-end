@@ -5,9 +5,10 @@ import { Box, Button, Flex, Image, Input, Spacer } from "@chakra-ui/react";
 import mainLogo from "../assets/RN-reviews now.png";
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Profile";
+import { useNavigate } from "react-router-dom";
 
 const HomeNavbar = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const { loginWithPopup } = useAuth0();
   const { logout } = useAuth0();
@@ -20,6 +21,7 @@ const HomeNavbar = () => {
     logout({ returnTo: window.location.origin });
   };
 
+  // This is used to test the protected endpoint through auth0, but will be disabled for now.
   const fetchRequest = async () => {
     try {
       const token = await getAccessTokenSilently();
@@ -40,6 +42,10 @@ const HomeNavbar = () => {
 
     // const jsonData = await response.json();
     // console.log(jsonData);
+  };
+
+  const changePage = () => {
+    navigate("/search");
   };
   return (
     <Flex
@@ -71,7 +77,7 @@ const HomeNavbar = () => {
           </Button>
           <Button
             onClick={() => {
-              fetchRequest();
+              changePage();
             }}
           >
             Get Hospitals
