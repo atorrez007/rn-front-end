@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import Reviews from "./Reviews";
+// import { Button } from "@chakra-ui/react";
 
 const HospitalDetails = () => {
-  // const params = useParams();
   const [thisHospital, setThisHospital] = useState([]);
   const { hospitalId } = useParams();
 

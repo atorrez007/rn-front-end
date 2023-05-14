@@ -5,6 +5,7 @@ import HospitalCard from "./HospitalCard";
 import Navbar from "./Navbar";
 import Pages from "./Pages";
 import { Button, Box } from "@chakra-ui/react";
+
 // import { useAuth0 } from "@auth0/auth0-react";
 // Previously the <Link> was used to wrap all the hospitals in a link, but now the link is entered into the hospital card component. If we want to change accessibility to allow clicking anywhere on the card, we can revert to putting the link in the hospitalData.map once again.
 const Search = () => {

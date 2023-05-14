@@ -31,6 +31,10 @@ const Reviews = () => {
     navigate(`/search/${hospitalId}/${reviewId}`);
   };
 
+  const handleReviewAdd = (hospitalId) => {
+    navigate(`/search/${hospitalId}/eval`);
+  };
+
   const handleBackClick = () => {
     navigate(`/search`);
     dispatch(getHospitals(currentUrl));
@@ -55,14 +59,25 @@ const Reviews = () => {
   return (
     <div>
       <Box as="div" pb="2">
-        <Button
-          colorScheme="yellow"
-          onClick={() => {
-            handleBackClick();
-          }}
-        >
-          Back
-        </Button>
+        <Box>
+          <Button
+            mr="4"
+            colorScheme="yellow"
+            onClick={() => {
+              handleBackClick();
+            }}
+          >
+            Back
+          </Button>
+          <Button
+            colorScheme="green"
+            onClick={() => {
+              handleReviewAdd();
+            }}
+          >
+            Add Review
+          </Button>
+        </Box>
       </Box>
       <table className="table-auto w-full bg-slate-300 border">
         <thead>
