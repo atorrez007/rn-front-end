@@ -72,7 +72,7 @@ const Reviews = () => {
           <Button
             colorScheme="green"
             onClick={() => {
-              handleReviewAdd();
+              handleReviewAdd(hospitalId);
             }}
           >
             Add Review

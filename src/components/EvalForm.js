@@ -15,11 +15,6 @@ import {
 
 const EvalForm = (props) => {
   const [hospitalName, setHospitalName] = useState("");
-  // const [shifts, setShifts] = useState([]);
-
-  // const addShifts = () => {
-  //   alert("added shift!");
-  // };
 
   const handleNameChange = (e) => {
     setHospitalName(e.target.value);
@@ -117,6 +112,109 @@ const EvalForm = (props) => {
                   </Stack>
                 </RadioGroup>
               </Stack>
+            </FormControl>
+            <FormControl mb="8">
+              <FormLabel>
+                What were the dining options for staff inside the Facility?
+              </FormLabel>
+              <CheckboxGroup size="md" colorScheme="green">
+                <Stack>
+                  <Checkbox value="on-site cafeteria">
+                    on-site cafeteria
+                  </Checkbox>
+                  <Checkbox value="limited hours">limited hours</Checkbox>
+                  <Checkbox value="smaller cafe with quick bites">
+                    smaller cafe with quick bites
+                  </Checkbox>
+                  <Checkbox value="vending machines">vending machines</Checkbox>
+                  <Checkbox value="coffee shop">coffee shop</Checkbox>
+                  <Checkbox value="food available on night shift">
+                    food available on night shift
+                  </Checkbox>
+                  <Checkbox value="other">other</Checkbox>
+                </Stack>
+              </CheckboxGroup>
+            </FormControl>
+            <FormControl mb="6" isRequired>
+              <FormLabel>
+                Scrub Color or any specific uniform requirements:
+              </FormLabel>
+              <Input type="text" name="scrubs"></Input>
+              <FormHelperText color="gray.400">
+                Enter the name of the hospital.
+              </FormHelperText>
+            </FormControl>
+            <FormControl mb="6">
+              <CheckboxGroup>
+                <Stack>
+                  <Checkbox value="Hotel">Hotel</Checkbox>
+                  <Checkbox value="Airbnb">Airbnb</Checkbox>
+                  <Checkbox value="Furnished Finder">Furnished Finder</Checkbox>
+                  <Checkbox value="My Own Camper/trailer">
+                    My Own camper/trailer
+                  </Checkbox>
+                  <Checkbox value="Stayed with Family">
+                    Stayed with family
+                  </Checkbox>
+                  <Checkbox value="Commuted back home">
+                    Commuted back home
+                  </Checkbox>
+                  <Checkbox value="This was a local contract">
+                    This was a local contract
+                  </Checkbox>
+                  <Checkbox value="other">Other</Checkbox>
+                </Stack>
+              </CheckboxGroup>
+            </FormControl>
+            <FormControl>
+              <FormLabel mb="4">
+                How would you rate the surrounding area in the category of
+                safety?
+              </FormLabel>
+              <RadioGroup>
+                <Stack spacing={4} mb="4" direction="row">
+                  <Radio value="1">1</Radio>
+                  <Radio value="2">2</Radio>
+                  <Radio value="3">3</Radio>
+                  <Radio value="4">4</Radio>
+                  <Radio value="5">5</Radio>
+                  <Radio value="6">6</Radio>
+                  <Radio value="7">7</Radio>
+                  <Radio value="8">8</Radio>
+                  <Radio value="9">9</Radio>
+                  <Radio value="10">10</Radio>
+                </Stack>
+              </RadioGroup>
+            </FormControl>
+            <FormControl mb="4">
+              <FormLabel>What was the parking situation?</FormLabel>
+              <RadioGroup>
+                <Stack spacing={4} mb="4" direction="row">
+                  <Radio value="Free">Free</Radio>
+                  <Radio value="Paid/reimbursed">Paid/reimbursed</Radio>
+                  <Radio value="RN pays for parking/not reimbursed">
+                    RN Pays for parking/not reimbursed
+                  </Radio>
+                  <Radio value="other">Other</Radio>
+                </Stack>
+              </RadioGroup>
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Overall Rating</FormLabel>
+              <RadioGroup>
+                <Stack spacing={4} mb="4" direction="row">
+                  <Radio value="1">1</Radio>
+                  <Radio value="2">2</Radio>
+                  <Radio value="3">3</Radio>
+                  <Radio value="4">4</Radio>
+                  <Radio value="5">5</Radio>
+                  <Radio value="6">6</Radio>
+                  <Radio value="7">7</Radio>
+                  <Radio value="8">8</Radio>
+                  <Radio value="9">9</Radio>
+                  <Radio value="10">10</Radio>
+                </Stack>
+              </RadioGroup>
             </FormControl>
           </form>
         </Box>
