@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import {
   Box,
@@ -13,30 +13,15 @@ import {
   Radio,
 } from "@chakra-ui/react";
 
-const EvalForm = (props) => {
-  const [hospitalName, setHospitalName] = useState("");
-
-  const handleNameChange = (e) => {
-    setHospitalName(e.target.value);
+const EvalForm = () => {
+  const handleSubmit = () => {
+    alert("form submitted");
   };
   return (
     <Box bg="white" h="100vh">
       <Box maxW="50%" m="auto">
         <Box p="4">
-          <form>
-            <FormControl mb="4" isRequired>
-              <FormLabel> Facility Name </FormLabel>
-              <Input
-                type="text"
-                name="title"
-                onChange={handleNameChange}
-                value={hospitalName}
-              ></Input>
-              <FormHelperText color="gray.400">
-                Enter the name of the hospital.
-              </FormHelperText>
-            </FormControl>
-
+          <form onSubmit={handleSubmit}>
             <FormControl mb="4" isRequired>
               <FormLabel> Department Worked </FormLabel>
               <Input type="text" name="title"></Input>
