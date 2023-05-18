@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useFormik, Field, Form } from "formik";
 import {
   Box,
   FormControl,
@@ -11,22 +11,45 @@ import {
   Stack,
   RadioGroup,
   Radio,
+  Button,
 } from "@chakra-ui/react";
 
 const EvalForm = () => {
+  const formik = useFormik({
+    initialValues: {
+      specialty: "",
+      shifts: ["dolly parton"],
+    },
+    onSubmit: () => {
+      console.log(formik.values);
+    },
+  });
+  const handleSubmit = () => {
+    alert("submit button clicked");
+  };
+
   return (
     <Box bg="white" h="100vh">
       <Box maxW="50%" m="auto">
         <Box p="4">
-          <form>
+          <form onSubmit={formik.handleSubmit}>
             <FormControl mb="4" isRequired>
               <FormLabel> Department Worked </FormLabel>
-              <Input type="text" name="title"></Input>
+              <Input
+                type="text"
+                name="specialty"
+                placeholder="medsurg, ICU"
+                value={formik.values.specialty}
+                onChange={formik.handleChange}
+              ></Input>
               <FormHelperText color="gray.400">
                 Which department did you work in?
               </FormHelperText>
             </FormControl>
-
+            {/* formik checkbox test */}
+            <FormControl>
+              <FormLabel>Formik Test</FormLabel>
+            </FormControl>
             <FormControl mb="8">
               <FormLabel> Shift</FormLabel>
               <FormHelperText color="gray.400" mb="3">
@@ -184,7 +207,7 @@ const EvalForm = () => {
             <FormControl isRequired>
               <FormLabel>Overall Rating</FormLabel>
               <RadioGroup>
-                <Stack spacing={4} mb="4" direction="row">
+                <Stack spacing={4} mb="12" direction="row">
                   <Radio value="1">1</Radio>
                   <Radio value="2">2</Radio>
                   <Radio value="3">3</Radio>
@@ -198,6 +221,11 @@ const EvalForm = () => {
                 </Stack>
               </RadioGroup>
             </FormControl>
+            <Box display="flex" justifyContent="center">
+              <Button colorScheme="blue" type="submit">
+                Submit
+              </Button>
+            </Box>
           </form>
         </Box>
       </Box>
