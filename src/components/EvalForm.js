@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormik, Field, Form } from "formik";
+import { useFormik } from "formik";
 import {
   Box,
   FormControl,
@@ -47,9 +47,6 @@ const EvalForm = () => {
               </FormHelperText>
             </FormControl>
             {/* formik checkbox test */}
-            <FormControl>
-              <FormLabel>Formik Test</FormLabel>
-            </FormControl>
             <FormControl mb="8">
               <FormLabel> Shift</FormLabel>
               <FormHelperText color="gray.400" mb="3">
