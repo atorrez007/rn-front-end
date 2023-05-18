@@ -14,14 +14,11 @@ import {
 } from "@chakra-ui/react";
 
 const EvalForm = () => {
-  const handleSubmit = () => {
-    alert("form submitted");
-  };
   return (
     <Box bg="white" h="100vh">
       <Box maxW="50%" m="auto">
         <Box p="4">
-          <form onSubmit={handleSubmit}>
+          <form>
             <FormControl mb="4" isRequired>
               <FormLabel> Department Worked </FormLabel>
               <Input type="text" name="title"></Input>
