@@ -23,7 +23,11 @@ const EvalForm = () => {
       accessibility: "",
       emrSoftware: "",
       diningOptions: [],
+      scrubColor: "",
       accommodations: [],
+      safety: "",
+      parking: "",
+      overallScore: 0,
     },
     onSubmit: (values) => {
       console.log(values);
@@ -338,9 +342,21 @@ const EvalForm = () => {
                 </Stack>
               </CheckboxGroup>
             </FormControl>
-
+            <FormControl mb="4" isRequired>
+              <FormLabel>Scrub Color</FormLabel>
+              <Input
+                type="text"
+                name="scrubColor"
+                placeholder="Red, Green, Navy-Blue"
+                value={formik.values.scrubColor}
+                onChange={formik.handleChange}
+              />
+              <FormHelperText color="gray.400">
+                Scrub Color or any specific uniform requirements.
+              </FormHelperText>
+            </FormControl>
             {/* Accommodations Checkbox Group */}
-            <FormControl mb="6" isRequired>
+            <FormControl mb="6">
               <FormLabel>
                 Accommodations (Where did you stay during the assignment?)
               </FormLabel>
@@ -389,7 +405,225 @@ const EvalForm = () => {
                 </Stack>
               </CheckboxGroup>
             </FormControl>
-
+            <FormControl mb="4">
+              <FormLabel mb="4">
+                How would you rate the surrounding area in the category of
+                safety?
+              </FormLabel>
+              <RadioGroup value={formik.values.safety} mb="6">
+                <Stack spacing={4} mb="4" direction="row">
+                  <Radio
+                    value="1"
+                    onChange={() => {
+                      handleInputChange("safety", "1");
+                    }}
+                  >
+                    1
+                  </Radio>
+                  <Radio
+                    value="2"
+                    onChange={() => {
+                      handleInputChange("safety", "2");
+                    }}
+                  >
+                    2
+                  </Radio>
+                  <Radio
+                    value="3"
+                    onChange={() => {
+                      handleInputChange("safety", "3");
+                    }}
+                  >
+                    3
+                  </Radio>
+                  <Radio
+                    value="4"
+                    onChange={() => {
+                      handleInputChange("safety", "4");
+                    }}
+                  >
+                    4
+                  </Radio>
+                  <Radio
+                    value="5"
+                    onChange={() => {
+                      handleInputChange("safety", "5");
+                    }}
+                  >
+                    5
+                  </Radio>
+                  <Radio
+                    value="6"
+                    onChange={() => {
+                      handleInputChange("safety", "6");
+                    }}
+                  >
+                    6
+                  </Radio>
+                  <Radio
+                    value="7"
+                    onChange={() => {
+                      handleInputChange("safety", "7");
+                    }}
+                  >
+                    7
+                  </Radio>
+                  <Radio
+                    value="8"
+                    onChange={() => {
+                      handleInputChange("safety", "8");
+                    }}
+                  >
+                    8
+                  </Radio>
+                  <Radio
+                    value="9"
+                    onChange={() => {
+                      handleInputChange("safety", "9");
+                    }}
+                  >
+                    9
+                  </Radio>
+                  <Radio
+                    value="10"
+                    onChange={() => {
+                      handleInputChange("safety", "10");
+                    }}
+                  >
+                    10
+                  </Radio>
+                </Stack>
+              </RadioGroup>
+            </FormControl>
+            <FormControl mb="8">
+              <FormLabel>What was the parking situation?</FormLabel>
+              <RadioGroup value={formik.values.parking}>
+                <Stack spacing={4} mb="4" direction="row">
+                  <Radio
+                    value="Free"
+                    onChange={() => {
+                      handleInputChange("parking", "Free");
+                    }}
+                  >
+                    Free
+                  </Radio>
+                  <Radio
+                    value="Paid/reimbursed"
+                    onChange={() => {
+                      handleInputChange("parking", "Paid/reimbursed");
+                    }}
+                  >
+                    Paid/reimbursed
+                  </Radio>
+                  <Radio
+                    value="RN pays for parking/not reimbursed"
+                    onChange={() => {
+                      handleInputChange(
+                        "parking",
+                        "RN pays for parking/not reimbursed"
+                      );
+                    }}
+                  >
+                    RN Pays for parking/not reimbursed
+                  </Radio>
+                  <Radio
+                    value="other"
+                    onChange={() => {
+                      handleInputChange("parking", "Other");
+                    }}
+                  >
+                    Other
+                  </Radio>
+                </Stack>
+              </RadioGroup>
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Overall Rating</FormLabel>
+              <RadioGroup value={formik.values.overallScore}>
+                <Stack spacing={4} mb="12" direction="row">
+                  <Radio
+                    value={1}
+                    onChange={() => {
+                      handleInputChange("overallScore", 1);
+                    }}
+                  >
+                    1
+                  </Radio>
+                  <Radio
+                    value={2}
+                    onChange={() => {
+                      handleInputChange("overallScore", 2);
+                    }}
+                  >
+                    2
+                  </Radio>
+                  <Radio
+                    value={3}
+                    onChange={() => {
+                      handleInputChange("overallScore", 3);
+                    }}
+                  >
+                    3
+                  </Radio>
+                  <Radio
+                    value={4}
+                    onChange={() => {
+                      handleInputChange("overallScore", 4);
+                    }}
+                  >
+                    4
+                  </Radio>
+                  <Radio
+                    value={5}
+                    onChange={() => {
+                      handleInputChange("overallScore", 5);
+                    }}
+                  >
+                    5
+                  </Radio>
+                  <Radio
+                    value={6}
+                    onChange={() => {
+                      handleInputChange("overallScore", 6);
+                    }}
+                  >
+                    6
+                  </Radio>
+                  <Radio
+                    value={7}
+                    onChange={() => {
+                      handleInputChange("overallScore", 7);
+                    }}
+                  >
+                    7
+                  </Radio>
+                  <Radio
+                    value={8}
+                    onChange={() => {
+                      handleInputChange("overallScore", 8);
+                    }}
+                  >
+                    8
+                  </Radio>
+                  <Radio
+                    value={9}
+                    onChange={() => {
+                      handleInputChange("overallScore", 9);
+                    }}
+                  >
+                    9
+                  </Radio>
+                  <Radio
+                    value={10}
+                    onChange={() => {
+                      handleInputChange("overallScore", 10);
+                    }}
+                  >
+                    10
+                  </Radio>
+                </Stack>
+              </RadioGroup>
+            </FormControl>
             <Button colorScheme="teal" type="submit">
               Submit
             </Button>
