@@ -24,9 +24,6 @@ const EvalForm = () => {
       console.log(formik.values);
     },
   });
-  const handleSubmit = () => {
-    alert("submit button clicked");
-  };
 
   return (
     <Box bg="white" h="100vh">

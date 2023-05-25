@@ -1,5 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
+import * as Yup from "yup";
 import {
   Box,
   FormControl,
@@ -13,7 +14,21 @@ import {
   Radio,
   Button,
 } from "@chakra-ui/react";
-
+const validationSchema = Yup.object().shape({
+  specialty: Yup.string()
+    .max(15, "Must be 15 characters or less")
+    .required("*"),
+  shifts: Yup.array().min(1, "Select at least one shift"),
+  nurseRatio: Yup.string().required("*"),
+  accessibility: Yup.string().required("Required"),
+  emrSoftware: Yup.string().required("Required"),
+  diningOptions: Yup.array().min(1, "Select at least one dining option"),
+  scrubColor: Yup.string().required("Required"),
+  accommodations: Yup.array().min(1, "Select at least one accommodation"),
+  safety: Yup.string().required("Required"),
+  parking: Yup.string().required("Required"),
+  overallScore: Yup.number().required("Required"),
+});
 const EvalForm = () => {
   const formik = useFormik({
     initialValues: {
@@ -29,6 +44,7 @@ const EvalForm = () => {
       parking: "",
       overallScore: 0,
     },
+    validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log(values);
     },
@@ -57,8 +73,11 @@ const EvalForm = () => {
       <Box maxW="50%" m="auto">
         <Box p="4">
           <form onSubmit={formik.handleSubmit}>
-            <FormControl mb="4" isRequired>
+            <FormControl mb="4">
               <FormLabel>Department Worked</FormLabel>
+              <Box mb="3" style={{ color: "red" }}>
+                {formik.errors.specialty ? formik.errors.specialty : "*"}
+              </Box>
               <Input
                 type="text"
                 name="specialty"
@@ -74,6 +93,9 @@ const EvalForm = () => {
             {/* Shift Checkbox Group */}
             <FormControl mb="8">
               <FormLabel>Shift</FormLabel>
+              <Box mb="3" style={{ color: "red" }}>
+                {formik.errors.shifts ? formik.errors.shifts : ""}
+              </Box>
               <FormHelperText color="gray.400" mb="3">
                 What shifts did you work?
               </FormHelperText>
@@ -178,7 +200,7 @@ const EvalForm = () => {
               </RadioGroup>
             </FormControl>
 
-            <FormControl mb="2">
+            <FormControl mb="2" isRequired>
               <Stack spacing={4}>
                 <FormLabel>Reliability and Communication</FormLabel>
                 <FormHelperText>
@@ -277,6 +299,11 @@ const EvalForm = () => {
               <FormLabel>
                 What were the dining options for staff inside the facility?
               </FormLabel>
+              <Box mb="3" style={{ color: "red" }}>
+                {formik.errors.diningOptions
+                  ? formik.errors.diningOptions
+                  : "*"}
+              </Box>
               <CheckboxGroup value={formik.values.diningOptions}>
                 <Stack>
                   <Checkbox
@@ -360,6 +387,11 @@ const EvalForm = () => {
               <FormLabel>
                 Accommodations (Where did you stay during the assignment?)
               </FormLabel>
+              <Box mb="3" style={{ color: "red" }}>
+                {formik.errors.accommodations
+                  ? formik.errors.accommodations
+                  : "*"}
+              </Box>
               <CheckboxGroup value={formik.values.accommodations}>
                 <Stack>
                   <Checkbox
@@ -405,7 +437,7 @@ const EvalForm = () => {
                 </Stack>
               </CheckboxGroup>
             </FormControl>
-            <FormControl mb="4">
+            <FormControl mb="4" isRequired>
               <FormLabel mb="4">
                 How would you rate the surrounding area in the category of
                 safety?
@@ -495,7 +527,7 @@ const EvalForm = () => {
                 </Stack>
               </RadioGroup>
             </FormControl>
-            <FormControl mb="8">
+            <FormControl mb="8" isRequired>
               <FormLabel>What was the parking situation?</FormLabel>
               <RadioGroup value={formik.values.parking}>
                 <Stack spacing={4} mb="4" direction="row">
