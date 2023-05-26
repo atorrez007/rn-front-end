@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
@@ -18,10 +20,10 @@ const validationSchema = Yup.object().shape({
   specialty: Yup.string()
     .max(15, "Must be 15 characters or less")
     .required("*"),
-  shifts: Yup.array().min(1, "Select at least one shift"),
+  shift: Yup.array().min(1, "Select at least one shift"),
   nurseRatio: Yup.string().required("*"),
   accessibility: Yup.string().required("Required"),
-  emrSoftware: Yup.string().required("Required"),
+  chartingSoftware: Yup.string().required("Required"),
   diningOptions: Yup.array().min(1, "Select at least one dining option"),
   scrubColor: Yup.string().required("Required"),
   accommodations: Yup.array().min(1, "Select at least one accommodation"),
@@ -29,14 +31,25 @@ const validationSchema = Yup.object().shape({
   parking: Yup.string().required("Required"),
   overallScore: Yup.number().required("Required"),
 });
+
 const EvalForm = () => {
+  const { hospitalId } = useParams();
+  const navigate = useNavigate();
+  const onSubmit = async (values) => {
+    // console.log(values);
+    await axios
+      .post(`http://localhost:8000/hospitals/${hospitalId}/reviews`, values)
+      .then((res) => console.log(res));
+    navigate(`/search/${hospitalId}`);
+  };
+
   const formik = useFormik({
     initialValues: {
       specialty: "",
-      shifts: [],
+      shift: [],
       nurseRatio: "",
       accessibility: "",
-      emrSoftware: "",
+      chartingSoftware: "",
       diningOptions: [],
       scrubColor: "",
       accommodations: [],
@@ -45,9 +58,7 @@ const EvalForm = () => {
       overallScore: 0,
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-    },
+    onSubmit: onSubmit,
   });
 
   const handleInputChange = (name, value) => {
@@ -94,46 +105,46 @@ const EvalForm = () => {
             <FormControl mb="8">
               <FormLabel>Shift</FormLabel>
               <Box mb="3" style={{ color: "red" }}>
-                {formik.errors.shifts ? formik.errors.shifts : ""}
+                {formik.errors.shift ? formik.errors.shift : ""}
               </Box>
               <FormHelperText color="gray.400" mb="3">
                 What shifts did you work?
               </FormHelperText>
-              <CheckboxGroup value={formik.values.shifts}>
+              <CheckboxGroup value={formik.values.shift}>
                 <Stack>
                   <Checkbox
                     value="3:12 days"
-                    onChange={() => handleInputChange("shifts", "3:12 days")}
+                    onChange={() => handleInputChange("shift", "3:12 days")}
                   >
                     3:12 days
                   </Checkbox>
                   <Checkbox
                     value="3:12 nights"
-                    onChange={() => handleInputChange("shifts", "3:12 nights")}
+                    onChange={() => handleInputChange("shift", "3:12 nights")}
                   >
                     3:12 nights
                   </Checkbox>
                   <Checkbox
                     value="4:12 days"
-                    onChange={() => handleInputChange("shifts", "4:12 days")}
+                    onChange={() => handleInputChange("shift", "4:12 days")}
                   >
                     4:12 days
                   </Checkbox>
                   <Checkbox
                     value="4:12 nights"
-                    onChange={() => handleInputChange("shifts", "4:12 nights")}
+                    onChange={() => handleInputChange("shift", "4:12 nights")}
                   >
                     4:12 nights
                   </Checkbox>
                   <Checkbox
                     value="5:8 days"
-                    onChange={() => handleInputChange("shifts", "5:8 days")}
+                    onChange={() => handleInputChange("shift", "5:8 days")}
                   >
                     5:8 days
                   </Checkbox>
                   <Checkbox
                     value="5:8 nights"
-                    onChange={() => handleInputChange("shifts", "5:8 nights")}
+                    onChange={() => handleInputChange("shift", "5:8 nights")}
                   >
                     5:8 nights
                   </Checkbox>
@@ -164,34 +175,41 @@ const EvalForm = () => {
             </FormControl>
 
             {/* EMR/Charting Software Radio Group */}
-            <FormControl mb="8">
+            <FormControl mb="8" isRequired>
               <FormLabel>EMR/Charting Software</FormLabel>
-              <RadioGroup value={formik.values.emrSoftware} name="emrSoftware">
+              <RadioGroup
+                value={formik.values.chartingSoftware}
+                name="chartingSoftware"
+              >
                 <Stack spacing={4} mb="4" direction="row">
                   <Radio
                     value="Epic"
-                    onChange={() => handleInputChange("emrSoftware", "Epic")}
+                    onChange={() =>
+                      handleInputChange("chartingSoftware", "Epic")
+                    }
                   >
                     Epic
                   </Radio>
                   <Radio
                     value="Meditech"
                     onChange={() =>
-                      handleInputChange("emrSoftware", "Meditech")
+                      handleInputChange("chartingSoftware", "Meditech")
                     }
                   >
                     Meditech
                   </Radio>
                   <Radio
                     value="Cerner"
-                    onChange={() => handleInputChange("emrSoftware", "Cerner")}
+                    onChange={() =>
+                      handleInputChange("chartingSoftware", "Cerner")
+                    }
                   >
                     Cerner
                   </Radio>
                   <Radio
                     value="Other"
                     onChange={() => {
-                      handleInputChange("emrSoftware", "Other");
+                      handleInputChange("chartingSoftware", "Other");
                     }}
                   >
                     Other
@@ -561,7 +579,7 @@ const EvalForm = () => {
                   <Radio
                     value="other"
                     onChange={() => {
-                      handleInputChange("parking", "Other");
+                      handleInputChange("parking", "other");
                     }}
                   >
                     Other
