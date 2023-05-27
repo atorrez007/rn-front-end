@@ -60,7 +60,7 @@ const ReviewDetails = () => {
               <h1>
                 Dinning Options:
                 <ul>
-                  {review.dinning?.map((item, index) => (
+                  {review.diningOptions?.map((item, index) => (
                     <li key={index}>
                       <strong>{item}</strong>
                     </li>
@@ -72,7 +72,7 @@ const ReviewDetails = () => {
               Scrub Colors: <strong>{review.scrubColor}</strong>
             </h1>
             <h1>
-              Housing: <strong>{review.housing}</strong>
+              Housing: <strong>{review.accommodations}</strong>
             </h1>
             <h1>
               Safety: <strong>{review.safety}</strong>
