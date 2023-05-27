@@ -37,10 +37,12 @@ const EvalForm = () => {
   const navigate = useNavigate();
   const onSubmit = async (values) => {
     // console.log(values);
-    await axios
-      .post(`http://localhost:8000/hospitals/${hospitalId}/reviews`, values)
-      .then((res) => console.log(res));
-    navigate(`/search/${hospitalId}`);
+    setTimeout(() => {
+      axios
+        .post(`http://localhost:8000/hospitals/${hospitalId}/reviews`, values)
+        .then((res) => console.log(res));
+      navigate(`/search/${hospitalId}`);
+    }, 3000);
   };
 
   const formik = useFormik({
