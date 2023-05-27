@@ -15,6 +15,13 @@ import {
   RadioGroup,
   Radio,
   Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  useDisclosure,
+  Spinner,
 } from "@chakra-ui/react";
 const validationSchema = Yup.object().shape({
   specialty: Yup.string()
@@ -36,14 +43,20 @@ const EvalForm = () => {
   const { hospitalId } = useParams();
   const navigate = useNavigate();
   const onSubmit = async (values) => {
+    onOpen(); //call to Chakra Modal open.
     // console.log(values);
     setTimeout(() => {
       axios
         .post(`http://localhost:8000/hospitals/${hospitalId}/reviews`, values)
-        .then((res) => console.log(res));
-      navigate(`/search/${hospitalId}`);
+        .then((res) => console.log(res))
+        .finally(() => {
+          onClose(); //call to Charka Modal close.
+          navigate(`/search/${hospitalId}`);
+        });
     }, 3000);
   };
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const formik = useFormik({
     initialValues: {
@@ -679,6 +692,23 @@ const EvalForm = () => {
             <Button colorScheme="teal" type="submit">
               Submit
             </Button>
+            <Modal size="lg" isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader display="flex" justifyContent="center">
+                  Sending Review
+                </ModalHeader>
+                <ModalBody pb="10" display="flex" justifyContent="center">
+                  <Spinner
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="blue.500"
+                    size="xl"
+                  />
+                </ModalBody>
+              </ModalContent>
+            </Modal>
           </form>
         </Box>
       </Box>
