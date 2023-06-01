@@ -1,6 +1,7 @@
 import React from "react";
 // import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useEffect } from "react";
 import { Box, Button, Flex, Image, Input, Spacer } from "@chakra-ui/react";
 import mainLogo from "../assets/RN-reviews now.png";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -9,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 const HomeNavbar = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const { loginWithPopup } = useAuth0();
   const { logout } = useAuth0();
 
@@ -47,6 +48,33 @@ const HomeNavbar = () => {
   const changePage = () => {
     navigate("/search");
   };
+
+  useEffect(() => {
+    const sendAuthDetails = async () => {
+      try {
+        if (user) {
+          // console.log(user);
+          await axios
+            .post("http://localhost:8000/signup", {
+              auth0sub: user.sub,
+              nickname: user.nickname,
+              email: user.email,
+            })
+            .then((response) => {
+              console.log(response.data);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+          // console.log(JSON.stringify(user));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    sendAuthDetails();
+  }, [user]);
+
   return (
     <Flex
       bg="#737373"
@@ -59,7 +87,7 @@ const HomeNavbar = () => {
     >
       <Profile />
       {/* <Spacer /> */}
-      {isAuthenticated ? (
+      {isAuthenticated && user ? (
         <Box mt="8">
           <Button
             onClick={() => {
