@@ -23,6 +23,7 @@ import {
   useDisclosure,
   Spinner,
 } from "@chakra-ui/react";
+import { useAuth0 } from "@auth0/auth0-react";
 const validationSchema = Yup.object().shape({
   specialty: Yup.string()
     .max(15, "Must be 15 characters or less")
@@ -41,13 +42,20 @@ const validationSchema = Yup.object().shape({
 
 const EvalForm = () => {
   const { hospitalId } = useParams();
+  const { user } = useAuth0();
+  console.log(user);
   const navigate = useNavigate();
   const onSubmit = async (values) => {
     onOpen(); //call to Chakra Modal open.
     // console.log(values);
     setTimeout(() => {
       axios
-        .post(`http://localhost:8000/hospitals/${hospitalId}/reviews`, values)
+        .post(`http://localhost:8000/hospitals/${hospitalId}/reviews`, {
+          values,
+          user: {
+            sub: user.sub,
+          },
+        })
         .then((res) => console.log(res))
         .finally(() => {
           onClose(); //call to Charka Modal close.
