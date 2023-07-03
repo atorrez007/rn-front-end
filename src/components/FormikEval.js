@@ -43,25 +43,29 @@ const validationSchema = Yup.object().shape({
 const EvalForm = () => {
   const { hospitalId } = useParams();
   const { user } = useAuth0();
-  console.log(user);
+
   const navigate = useNavigate();
   const onSubmit = async (values) => {
-    onOpen(); //call to Chakra Modal open.
-    // console.log(values);
-    setTimeout(() => {
-      axios
-        .post(`http://localhost:8000/hospitals/${hospitalId}/reviews`, {
-          values,
-          user: {
-            sub: user.sub,
-          },
-        })
-        .then((res) => console.log(res))
-        .finally(() => {
-          onClose(); //call to Charka Modal close.
-          navigate(`/search/${hospitalId}`);
-        });
-    }, 3000);
+    if (user) {
+      onOpen(); //call to Chakra Modal open.
+      // console.log(values);
+      setTimeout(() => {
+        axios
+          .post(`http://localhost:8000/hospitals/${hospitalId}/reviews`, {
+            values,
+            user: {
+              sub: user.sub,
+            },
+          })
+          .then((res) => console.log(res))
+          .finally(() => {
+            onClose(); //call to Charka Modal close.
+            navigate(`/search/${hospitalId}`);
+          });
+      }, 3000);
+    } else {
+      alert(`You are not logged in. Please log in.`);
+    }
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();

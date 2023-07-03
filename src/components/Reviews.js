@@ -4,18 +4,32 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Box, Button } from "@chakra-ui/react";
 import axios from "axios";
 import { getHospitals } from "../redux/hospitalReducer";
+import { getReviews } from "../redux/reviewReducer";
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const { hospitalId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const currentUrl = useSelector((state) => state.hospitals.currentUrl);
-  // console.log(currentUrl);
+  const currentHospitalReviews = useSelector((state) => state.reviews.reviews);
+  console.log(currentHospitalReviews);
+  const reduxURL = useSelector((state) => state.reviews.currentUrl);
+  console.log(reduxURL);
+  const currentReviewURL = `http://localhost:8000/hospitals/${hospitalId}/reviews`;
 
-  // const { reviewId } = useParams();
+  useEffect(() => {
+    const fetchReviewData = async (currentReviewURL) => {
+      try {
+        dispatch(getReviews(currentReviewURL));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchReviewData(currentReviewURL);
+  }, [dispatch, currentReviewURL]);
 
+  // Replace this useEffect with the reviewReducer to get review data.
   useEffect(() => {
     axios
       .get(`http://localhost:8000/hospitals/${hospitalId}/reviews`)

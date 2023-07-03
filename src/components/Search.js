@@ -15,7 +15,7 @@ const Search = () => {
   const hospitalCount = useSelector((state) => state.hospitals.hospitals.count);
   const hospitalState = useSelector((state) => state.hospitals.hospitals.data);
 
-  const currentUrl = useSelector((state) => state.hospitals.currentUrl);
+  // const currentUrl = useSelector((state) => state.hospitals.currentUrl);
   // console.log(currentUrl);
 
   const numOfPages = Math.ceil(hospitalCount / 12);
@@ -207,72 +207,6 @@ const Search = () => {
       </option>
     );
   }
-  // const uniqueStates = allHospitals.data
-  //   .map((hospital) => hospital.state)
-  //   .filter((state, index, arr) => {
-  //     return arr.indexOf(state) === index;
-  //   })
-  //   .sort();
-
-  // const statesFiltered = uniqueStates.map((item, index) => {
-  //   return (
-  //     <option key={index + 1} value={item}>
-  //       {item}
-  //     </option>
-  //   );
-  // });
-
-  // statesFiltered.unshift(
-  //   <option value="Choose a State" key={0}>
-  //     Choose a State
-  //   </option>
-  // );
-
-  // const citiesFiltered = allHospitals.data
-  //   .filter((hospital) => hospital.state === state)
-  //   .map((hospital) => hospital.city)
-  //   .filter((city, index, arr) => {
-  //     return arr.indexOf(city) === index;
-  //   })
-  //   .sort()
-  //   .map((city, index) => {
-  //     return (
-  //       <option city={city} value={city} key={index + 1}>
-  //         {city}
-  //       </option>
-  //     );
-  //   });
-
-  // citiesFiltered.unshift(
-  //   <option value="Choose a City" key={0}>
-  //     Choose a City
-  //   </option>
-  // );
-
-  // Redux allHospitals call to populate search state and city options
-  // const otherUniqueStates = fullList
-  //   ?.map((hospital) => hospital.state)
-  //   .filter((state, index, arr) => {
-  //     return arr.indexOf(state) === index;
-  //   })
-  //   .sort();
-
-  // const otherStatesFiltered = otherUniqueStates?.map((item, index) => {
-  //   return (
-  //     <option key={index} value={item}>
-  //       {item}
-  //     </option>
-  //   );
-  // });
-
-  // const otherCitiesFiltered = fullList
-  //   ? fullList
-  //       .filter((hospital) => hospital.state === state)
-  //       .map((hospital) => hospital.city)
-  //       .filter((city, index, arr) => {
-  //         return arr.indexOf(city) === index;
-  //       })
-  //   : null;
 
   const hospitals = hospitalState?.map((hospital) => (
     <HospitalCard
