@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const HospitalCard = ({ name, city, state, img, id }) => {
+  const [score, setScore] = useState();
+  // Create an axios request for overall average score.
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/hospitals/score/${id}`)
+      .then((response) => {
+        setScore(Math.floor(response.data.averageScore));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+
   return (
     <div className="text-center w-full max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <h1>{score}/10</h1>
       <img
         className="p-8 rounded-t-lg"
         src={img}
         alt="hospital or popular city view"
       />
-
       <div className="px-5 pb-5">
         <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
           {name}

@@ -14,7 +14,7 @@ const Pages = ({ handlePageChange, state }) => {
   useEffect(() => {
     handlePageChange(1);
     setCurrentPage(1);
-  }, [state, handlePageChange]);
+  }, [state]);
 
   let listedPages;
   if (numOfPages <= 10) {

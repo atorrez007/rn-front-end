@@ -10,9 +10,11 @@ import { Button, Box } from "@chakra-ui/react";
 // Previously the <Link> was used to wrap all the hospitals in a link, but now the link is entered into the hospital card component. If we want to change accessibility to allow clicking anywhere on the card, we can revert to putting the link in the hospitalData.map once again.
 const Search = () => {
   const dispatch = useDispatch();
+
   const allHospitals = useSelector((state) => state.hospitals.allHospitals);
   // const [resetPage, setResetPage] = useState(1);
   const hospitalCount = useSelector((state) => state.hospitals.hospitals.count);
+
   const hospitalState = useSelector((state) => state.hospitals.hospitals.data);
 
   // const currentUrl = useSelector((state) => state.hospitals.currentUrl);
@@ -76,19 +78,6 @@ const Search = () => {
   // add query to string.
   const url = `http://localhost:8000/hospitals?page=${page}&state=${state}&city=${city}&query=${query}`;
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       dispatch(getAllHospitals());
-  //       setRawData(allHospitals);
-  //     } catch (error) {
-  //       console.error(`React error ${error}`);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [dispatch, allHospitals]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -101,12 +90,6 @@ const Search = () => {
     fetchData();
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   if (allHospitals.length > 0) {
-  //     setRawData(allHospitals);
-  //   }
-  // }, [allHospitals]);
-
   useEffect(() => {
     const fetchHospitalData = async () => {
       try {
@@ -118,48 +101,6 @@ const Search = () => {
     fetchHospitalData();
     // setResetPage(1);
   }, [dispatch, url]);
-
-  // This is a query without redux. Will replace with new redux call.
-  // useEffect(() => {
-  //   fetch(`http://localhost:8000/hospitals?allHospitals=true`)
-  //     .then((res) => res.json())
-  //     .then((hospitals) => {
-  //       setRawData(hospitals.data);
-  //       console.log(rawData);
-  //       // console.log(hospitals.data);
-  //       // dispatch(getHospitals(url)); // dispatching after getting all data
-  //     });
-  // }, [dispatch, url]);
-
-  // useEffect(() => {
-  //   // dispatch(getAllHospitals());
-  //   // setRawData(allHospitals.data);
-  //   const fetchAllHospitalData = async () => {
-  //     const allHospitalData = dispatch(getAllHospitals());
-  //     setRawData(allHospitalData.data);
-  //   };
-  //   fetchAllHospitalData();
-  // }, [dispatch, allHospitals]);
-
-  // const uniqueCities = rawData
-  //   ?.map((hospital) => hospital.city)
-  //   .filter((city, index, arr) => {
-  //     return arr.indexOf(city) === index;
-  //   })
-  //   .sort();
-
-  // const uniqueCities = [
-  //   ...new Set(hospitalState.map((hospital) => hospital.city)),
-  // ];
-
-  // const citiesFiltered = uniqueCities.map((city, index) => {
-  //   return <option key={index}>{city}</option>;
-  // });
-
-  // The only problem with this is that I'm querying only the first page.
-  // const citiesFiltered = uniqueCities.map((city, index) => (
-  //   <option key={index}>{city}</option>
-  // ));
 
   // Raw data query to populate states and cities in search bar.
   let statesFiltered;
@@ -218,6 +159,10 @@ const Search = () => {
       id={hospital.hospitalId}
     />
   ));
+
+  // const hospitalID = hospitalState?.map((hospital) =>
+  //   console.log(`hospitalID goes here. ${hospitalId}`)
+  // );
 
   return (
     <div className="flex bg-wetfloor-500">
