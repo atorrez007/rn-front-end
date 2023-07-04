@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { Box, Button } from "@chakra-ui/react";
-import axios from "axios";
+
 import { getHospitals } from "../redux/hospitalReducer";
 import { getReviews } from "../redux/reviewReducer";
 
 const Reviews = () => {
-  const [reviews, setReviews] = useState([]);
+  // const [reviews, setReviews] = useState([]);
   const { hospitalId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUrl = useSelector((state) => state.hospitals.currentUrl);
   const currentHospitalReviews = useSelector((state) => state.reviews.reviews);
-  console.log(currentHospitalReviews);
-  const reduxURL = useSelector((state) => state.reviews.currentUrl);
-  console.log(reduxURL);
+  // const reduxURL = useSelector((state) => state.reviews.currentUrl);
+
   const currentReviewURL = `http://localhost:8000/hospitals/${hospitalId}/reviews`;
 
   useEffect(() => {
@@ -30,16 +29,16 @@ const Reviews = () => {
   }, [dispatch, currentReviewURL]);
 
   // Replace this useEffect with the reviewReducer to get review data.
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8000/hospitals/${hospitalId}/reviews`)
-      .then((response) => {
-        setReviews(response.data[0].reviews);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [hospitalId]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:8000/hospitals/${hospitalId}/reviews`)
+  //     .then((response) => {
+  //       setReviews(response.data[0].reviews);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, [hospitalId]);
 
   const handleReviewChange = (reviewId) => {
     navigate(`/search/${hospitalId}/${reviewId}`);
@@ -54,7 +53,24 @@ const Reviews = () => {
     dispatch(getHospitals(currentUrl));
   };
 
-  const reviewBreakdown = reviews.map((review) => {
+  // Reviews from api request. To be deleted.
+  // const reviewBreakdown = reviews.map((review) => {
+  //   return (
+  //     // <Link key={review._id} to={`/search/${hospitalId}/${review._id}`}>
+  //     <tr
+  //       key={review._id}
+  //       className="bg-slate-400 flex p-2 w-full h-[66%] items-center border border-black"
+  //       onClick={() => {
+  //         handleReviewChange(review._id);
+  //       }}
+  //     >
+  //       <td>{review.overallScore}</td>
+  //     </tr>
+  //     // </Link>
+  //   );
+  // });
+
+  const reviewBreakdown = currentHospitalReviews.map((review) => {
     return (
       // <Link key={review._id} to={`/search/${hospitalId}/${review._id}`}>
       <tr
