@@ -157,6 +157,7 @@ const Search = () => {
       state={hospital.state}
       img={hospital.img}
       id={hospital.hospitalId}
+      overallScore={hospital.overallScore}
     />
   ));
 

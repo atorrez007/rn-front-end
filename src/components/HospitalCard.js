@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
-const HospitalCard = ({ name, city, state, img, id }) => {
-  const [score, setScore] = useState();
+const HospitalCard = ({ name, city, state, img, id, overallScore }) => {
+  // const [score, setScore] = useState();
   // Create an axios request for overall average score.
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8000/hospitals/score/${id}`)
-      .then((response) => {
-        setScore(Math.floor(response.data.averageScore));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:8000/hospitals/score/${id}`)
+  //     .then((response) => {
+  //       setScore(Math.floor(response.data.averageScore));
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // });
 
   return (
     <div className="text-center w-full max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <h1>{score}/10</h1>
+      <h1>{overallScore ? Math.floor(overallScore) : "No Reviews Left "}/10</h1>
+
       <img
         className="p-8 rounded-t-lg"
         src={img}
