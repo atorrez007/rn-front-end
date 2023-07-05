@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import StarRating from "./StarRating";
 
 const HospitalCard = ({ name, city, state, img, id, overallScore }) => {
   // const [score, setScore] = useState();
@@ -37,6 +38,9 @@ const HospitalCard = ({ name, city, state, img, id, overallScore }) => {
         </p>
 
         <div className="flex items-center mt-2.5 mb-5">
+          <StarRating
+            overallScore={overallScore ? Math.floor(overallScore) : "0"}
+          />
           {/* <svg
             aria-hidden="true"
             className="w-5 h-5 text-yellow-300"
