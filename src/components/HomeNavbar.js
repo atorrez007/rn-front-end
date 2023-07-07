@@ -3,6 +3,8 @@ import React from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import { Box, Button, Flex, Image, Input, Spacer } from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import mainLogo from "../assets/RN-reviews now.png";
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Profile";
@@ -23,27 +25,27 @@ const HomeNavbar = () => {
   };
 
   // This is used to test the protected endpoint through auth0, but will be disabled for now.
-  const fetchRequest = async () => {
-    try {
-      const token = await getAccessTokenSilently();
-      // console.log(token);
+  // const fetchRequest = async () => {
+  //   try {
+  //     const token = await getAccessTokenSilently();
+  //     // console.log(token);
 
-      // const response = await axios.get("http://localhost:8000/getHospitals");
+  //     // const response = await axios.get("http://localhost:8000/getHospitals");
 
-      const response = await axios.get("http://localhost:8000/testing", {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      });
+  //     const response = await axios.get("http://localhost:8000/testing", {
+  //       headers: {
+  //         authorization: `Bearer ${token}`,
+  //       },
+  //     });
 
-      console.log(response.data);
-    } catch (err) {
-      console.log(`Error message: ${err}`);
-    }
+  //     console.log(response.data);
+  //   } catch (err) {
+  //     console.log(`Error message: ${err}`);
+  //   }
 
-    // const jsonData = await response.json();
-    // console.log(jsonData);
-  };
+  //   // const jsonData = await response.json();
+  //   // console.log(jsonData);
+  // };
 
   const changePage = () => {
     navigate("/search");
@@ -86,10 +88,35 @@ const HomeNavbar = () => {
       borderColor="black"
     >
       <Profile />
-      {/* <Spacer /> */}
+      {isAuthenticated && user ? (
+        <Menu>
+          {({ isOpen }) => (
+            <>
+              <MenuList>
+                <MenuItem
+                  onClick={() => {
+                    logoutFunc();
+                  }}
+                >
+                  Logout
+                </MenuItem>
+              </MenuList>
+              <MenuButton
+                borderRadius="full"
+                isActive={isOpen}
+                as={Button}
+                colorScheme="gray"
+              >
+                <ChevronDownIcon />
+              </MenuButton>
+            </>
+          )}
+        </Menu>
+      ) : null}
+
       {isAuthenticated && user ? (
         <Box mt="8">
-          <Button
+          {/* <Button
             onClick={() => {
               logoutFunc();
             }}
@@ -102,8 +129,9 @@ const HomeNavbar = () => {
             _active={{ background: "whitesmoke", color: "black" }}
           >
             Logout
-          </Button>
+          </Button> */}
           <Button
+            ml="8"
             onClick={() => {
               changePage();
             }}
@@ -128,13 +156,7 @@ const HomeNavbar = () => {
           >
             Log in
           </Button>
-          <Button
-            onClick={() => {
-              fetchRequest();
-            }}
-          >
-            Get Hospitals
-          </Button>
+
           {/* <Button
             rounded="3xl"
             mr="1"
@@ -147,32 +169,6 @@ const HomeNavbar = () => {
           </Button> */}
         </Box>
       )}
-      {/* <Box mt="8">
-        <Button
-          onClick={() => {
-            loginWithRedirect();
-          }}
-          ml="120px"
-          mr="10"
-          colorScheme="red"
-          rounded="3xl"
-          boxShadow="dark-lg"
-          _hover={{ background: "gray.600" }}
-          _active={{ background: "whitesmoke", color: "black" }}
-        >
-          Log in
-        </Button>
-        <Button
-          rounded="3xl"
-          mr="1"
-          colorScheme="red"
-          boxShadow="dark-lg"
-          _hover={{ background: "gray.600" }}
-          _active={{ background: "whitesmoke", color: "black" }}
-        >
-          Sign up
-        </Button>
-      </Box> */}
 
       <Spacer />
 
