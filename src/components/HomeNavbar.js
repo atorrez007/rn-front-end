@@ -115,21 +115,7 @@ const HomeNavbar = () => {
       ) : null}
 
       {isAuthenticated && user ? (
-        <Box mt="8">
-          {/* <Button
-            onClick={() => {
-              logoutFunc();
-            }}
-            rounded="3xl"
-            ml="55px"
-            mr="10"
-            colorScheme="red"
-            boxShadow="dark-lg"
-            _hover={{ background: "gray.600" }}
-            _active={{ background: "whitesmoke", color: "black" }}
-          >
-            Logout
-          </Button> */}
+        <Box mt="8" display="flex">
           <Button
             ml="8"
             onClick={() => {
@@ -154,19 +140,8 @@ const HomeNavbar = () => {
             _hover={{ background: "gray.600" }}
             _active={{ background: "whitesmoke", color: "black" }}
           >
-            Log in
+            Log in / Sign up
           </Button>
-
-          {/* <Button
-            rounded="3xl"
-            mr="1"
-            colorScheme="red"
-            boxShadow="dark-lg"
-            _hover={{ background: "gray.600" }}
-            _active={{ background: "whitesmoke", color: "black" }}
-          >
-            Sign up
-          </Button> */}
         </Box>
       )}
 
