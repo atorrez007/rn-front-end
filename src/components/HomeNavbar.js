@@ -2,10 +2,10 @@ import React from "react";
 // import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
-import { Box, Button, Flex, Image, Input, Spacer } from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Spacer } from "@chakra-ui/react";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import mainLogo from "../assets/RN-reviews now.png";
+import mainLogo from "../assets/RN-reviews now 2.png";
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Profile";
 import { useNavigate } from "react-router-dom";
@@ -147,13 +147,24 @@ const HomeNavbar = () => {
 
       <Spacer />
 
-      <Box w="649px" h="-140px">
+      {/* <Box w="649px" h="-140px">
         <Image alt="RN-Logo" src={mainLogo} w="649px" h="138px" />
+      </Box> */}
+
+      <Box flex="2" display="flex" justifyContent="center" alignItems="center">
+        <Image
+          alt="RN-Logo"
+          src={mainLogo}
+          w="350px"
+          h="81px"
+          // maxWidth="800px"
+          // maxHeight="300px"
+        />
       </Box>
 
       <Spacer />
 
-      <Input
+      {/* <Input
         _hover={{ boxShadow: "dark-lg" }}
         _focus={{ boxShadow: "dark-lg" }}
         bg="rgb(237,242,247)"
@@ -163,7 +174,7 @@ const HomeNavbar = () => {
         textAlign="left"
         placeholder="Where to next?"
         w="sm"
-      />
+      /> */}
     </Flex>
   );
 };

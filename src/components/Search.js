@@ -5,6 +5,7 @@ import HospitalCard from "./HospitalCard";
 import Navbar from "./Navbar";
 import Pages from "./Pages";
 import { Button, Box } from "@chakra-ui/react";
+import HomeNavbar from "../components/HomeNavbar";
 
 // import { useAuth0 } from "@auth0/auth0-react";
 // Previously the <Link> was used to wrap all the hospitals in a link, but now the link is entered into the hospital card component. If we want to change accessibility to allow clicking anywhere on the card, we can revert to putting the link in the hospitalData.map once again.
@@ -149,6 +150,18 @@ const Search = () => {
     );
   }
 
+  // const hospitals = hospitalState?.map((hospital) => (
+  //   <HospitalCard
+  //     key={hospital.hospitalId}
+  //     name={hospital.name}
+  //     city={hospital.city}
+  //     state={hospital.state}
+  //     img={hospital.img}
+  //     id={hospital.hospitalId}
+  //     overallScore={hospital.overallScore}
+  //   />
+  // ));
+
   const hospitals = hospitalState?.map((hospital) => (
     <HospitalCard
       key={hospital.hospitalId}
@@ -166,49 +179,52 @@ const Search = () => {
   // );
 
   return (
-    <div className="flex bg-wetfloor-500">
-      <Navbar />
-      <div className="p-11  w-full border-black border-solid">
-        <div className="bg-blizzard-800 border-2 border-white rounded h-10 py-8 mb-10 flex justify-center items-center px-4 sm:px-6 lg:px-8">
-          <form onChange={setSearchQuery} onSubmit={setSearchQuery}>
-            <input
-              onChange={handleSearchTermChange}
-              value={searchTerm}
-              type="text"
-              className="h-14 w-96 pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none"
-              placeholder="Search anything..."
-            />
-          </form>
-          <div className="">
-            <label className="p-4 h-12 rounded text-center"></label>
-            <select value={selectedState} onChange={handleStateChange}>
-              {allHospitals.data ? statesFiltered : null}
-            </select>
+    <div>
+      <HomeNavbar />
+      <div className="flex bg-gray-600">
+        {/* <Navbar /> */}
+        <div className="p-11  w-full border-black border-solid">
+          <div className="bg-blizzard-800 border-2 border-white rounded h-10 py-8 mb-10 flex justify-center items-center px-4 sm:px-6 lg:px-8">
+            <form onChange={setSearchQuery} onSubmit={setSearchQuery}>
+              <input
+                onChange={handleSearchTermChange}
+                value={searchTerm}
+                type="text"
+                className="h-14 w-96 pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none"
+                placeholder="Search anything..."
+              />
+            </form>
+            <div className="">
+              <label className="p-4 h-12 rounded text-center"></label>
+              <select value={selectedState} onChange={handleStateChange}>
+                {allHospitals.data ? statesFiltered : null}
+              </select>
+            </div>
+            <div className="absolute top-4 right-3">
+              <i className="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
+            </div>
+            <div className="">
+              <label className="p-4 h-12 rounded text-center"></label>
+              <select value={selectedCity} onChange={handleCityChange}>
+                {allHospitals.data ? citiesFiltered : null}
+              </select>
+            </div>
+            <Box ml="8">
+              <Button colorScheme="yellow" onClick={resetSearchParams}>
+                Reset Search
+              </Button>
+            </Box>
+            <div className="absolute top-4 right-3">
+              <i className="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
+            </div>
           </div>
-          <div className="absolute top-4 right-3">
-            <i className="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
+          <div className="mx-auto max-w-6xl">
+            <div className="grid grid-cols-3 gap-10">
+              {hospitals ? hospitals : null}
+            </div>
           </div>
-          <div className="">
-            <label className="p-4 h-12 rounded text-center"></label>
-            <select value={selectedCity} onChange={handleCityChange}>
-              {allHospitals.data ? citiesFiltered : null}
-            </select>
-          </div>
-          <Box ml="8">
-            <Button colorScheme="yellow" onClick={resetSearchParams}>
-              Reset Search
-            </Button>
-          </Box>
-          <div className="absolute top-4 right-3">
-            <i className="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
-          </div>
+          <Pages handlePageChange={handlePageChange} state={state} />
         </div>
-        <div className="mx-auto max-w-6xl">
-          <div className="grid grid-cols-3 gap-10">
-            {hospitals ? hospitals : null}
-          </div>
-        </div>
-        <Pages handlePageChange={handlePageChange} state={state} />
       </div>
     </div>
   );
