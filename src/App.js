@@ -9,9 +9,13 @@ import Reviews from "./components/Reviews";
 import ReviewDetails from "./components/ReviewDetails";
 // import EvalForm from "./components/EvalForm";
 import FormikEval from "./components/FormikEval";
+import { Box } from "@chakra-ui/react";
 function App() {
   return (
-    <div className="md:flex md:bg-gray-600 bg-gray-600 flex flex-col h-screen">
+    <Box
+      className="md:flex md:bg-gray-600 bg-gray-600 flex flex-col min-h-screen"
+      height="100vh"
+    >
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -28,7 +32,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </Box>
   );
 }
 
