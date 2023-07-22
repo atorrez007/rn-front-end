@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllHospitals, getHospitals } from "../redux/hospitalReducer";
 import HospitalCard from "./HospitalCard";
-import Navbar from "./Navbar";
 import Pages from "./Pages";
-import { Button, Box } from "@chakra-ui/react";
+import { Button, Box, Input, Select, Flex } from "@chakra-ui/react";
 import HomeNavbar from "../components/HomeNavbar";
 
 // import { useAuth0 } from "@auth0/auth0-react";
@@ -179,54 +178,51 @@ const Search = () => {
   // );
 
   return (
-    <div>
+    <Box bg="gray.600" w="auto" p={8}>
       <HomeNavbar />
-      <div className="flex bg-gray-600">
-        {/* <Navbar /> */}
-        <div className="p-11  w-full border-black border-solid">
-          <div className="bg-blizzard-800 border-2 border-white rounded h-10 py-8 mb-10 flex justify-center items-center px-4 sm:px-6 lg:px-8">
-            <form onChange={setSearchQuery} onSubmit={setSearchQuery}>
-              <input
-                onChange={handleSearchTermChange}
-                value={searchTerm}
-                type="text"
-                className="h-14 w-96 pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none"
-                placeholder="Search anything..."
-              />
-            </form>
-            <div className="">
-              <label className="p-4 h-12 rounded text-center"></label>
-              <select value={selectedState} onChange={handleStateChange}>
-                {allHospitals.data ? statesFiltered : null}
-              </select>
-            </div>
-            <div className="absolute top-4 right-3">
-              <i className="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
-            </div>
-            <div className="">
-              <label className="p-4 h-12 rounded text-center"></label>
-              <select value={selectedCity} onChange={handleCityChange}>
-                {allHospitals.data ? citiesFiltered : null}
-              </select>
-            </div>
-            <Box ml="8">
-              <Button colorScheme="yellow" onClick={resetSearchParams}>
-                Reset Search
-              </Button>
-            </Box>
-            <div className="absolute top-4 right-3">
-              <i className="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
-            </div>
-          </div>
-          <div className="mx-auto max-w-6xl">
-            <div className="grid grid-cols-3 gap-10">
-              {hospitals ? hospitals : null}
-            </div>
-          </div>
-          <Pages handlePageChange={handlePageChange} state={state} />
-        </div>
-      </div>
-    </div>
+      <Flex pt="4" justify="center">
+        <Box mr="1">
+          <Select
+            bg="white"
+            value={selectedState}
+            onChange={handleStateChange}
+            mb={4}
+          >
+            {allHospitals.data ? statesFiltered : null}
+          </Select>
+        </Box>
+        <Box mr="1">
+          <Select
+            bg="white"
+            value={selectedCity}
+            onChange={handleCityChange}
+            mb={4}
+          >
+            {allHospitals.data ? citiesFiltered : null}
+          </Select>
+          <Box>
+            <Button colorScheme="yellow" onClick={resetSearchParams}>
+              Reset Search
+            </Button>
+          </Box>
+        </Box>
+        <form onChange={setSearchQuery} onSubmit={setSearchQuery}>
+          <Input
+            bg="white"
+            onChange={handleSearchTermChange}
+            value={searchTerm}
+            focus={{ shadow: "outline" }}
+            placeholder="Search anything..."
+          />
+        </form>
+      </Flex>
+      <Box mx="auto" maxW="6xl" mt={8}>
+        <Box bg="gray.600" className="grid grid-cols-3 gap-10">
+          {hospitals ? hospitals : null}
+        </Box>
+      </Box>
+      <Pages handlePageChange={handlePageChange} state={state} />
+    </Box>
   );
 };
 
