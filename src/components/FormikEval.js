@@ -22,6 +22,7 @@ import {
   ModalBody,
   useDisclosure,
   Spinner,
+  useToast,
 } from "@chakra-ui/react";
 import { useAuth0 } from "@auth0/auth0-react";
 const validationSchema = Yup.object().shape({
@@ -45,6 +46,17 @@ const EvalForm = () => {
   const { user } = useAuth0();
 
   const navigate = useNavigate();
+  const toast = useToast();
+  const toastAlert = () => {
+    toast({
+      position: "top",
+      title: "Review Added",
+      description: "Your review has been added!",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
+  };
   const onSubmit = async (values) => {
     if (user) {
       onOpen(); //call to Chakra Modal open.
@@ -60,6 +72,7 @@ const EvalForm = () => {
           .then((res) => console.log(res))
           .finally(() => {
             onClose(); //call to Charka Modal close.
+            toastAlert();
             navigate(`/search/${hospitalId}`);
           });
       }, 3000);

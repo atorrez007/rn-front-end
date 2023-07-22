@@ -1,24 +1,48 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { getReviewDetails } from "../redux/reviewReducer";
 
 const ReviewDetails = () => {
+  const dispatch = useDispatch();
   const { reviewId } = useParams();
   const [review, setReview] = useState("");
+  const currentHospitalReviewDetails = useSelector(
+    (state) => state.reviews.reviewDetails
+  );
+
+  // console.log(
+  //   currentHospitalReviewDetails
+  //     ? currentHospitalReviewDetails
+  //     : "review not present"
+  // );
+  // useEffect(() => {
+  //   fetch(`http://localhost:8000/reviews/${reviewId}`)
+  //     .then((res) => res.json())
+  //     .then((data) => setReview(data));
+  // }, [reviewId]);
+  const reviewDetailsURL = `http://localhost:8000/reviews/${reviewId}`;
 
   useEffect(() => {
-    fetch(`http://localhost:8000/reviews/${reviewId}`)
-      .then((res) => res.json())
-      .then((data) => setReview(data));
-  }, [reviewId]);
+    const fetchReviewDetails = async (reviewDetailsURL) => {
+      try {
+        dispatch(getReviewDetails(reviewDetailsURL));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchReviewDetails(reviewDetailsURL);
+  }, [dispatch, reviewDetailsURL]);
 
   return (
     <div className="bg-white p-4 h-full flex justify-center">
       <div className=" w-[66%] text-center ">
         <h1 className="text-lg p-2">
-          Overall Score: <strong>{review.overallScore}</strong>
+          Overall Score:{" "}
+          <strong>{currentHospitalReviewDetails.overallScore}</strong>
         </h1>
         <p>
-          <strong> {review.date}</strong>
+          <strong> {currentHospitalReviewDetails.date}</strong>
         </p>
         <div className="border  h-auto px-auto py-auto flex justify-start">
           <div className=" w-full p-2">
