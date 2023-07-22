@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllHospitals, getHospitals } from "../redux/hospitalReducer";
 import HospitalCard from "./HospitalCard";
-import Navbar from "./Navbar";
 import Pages from "./Pages";
 import { Button, Box, Input, Select, Flex } from "@chakra-ui/react";
 import HomeNavbar from "../components/HomeNavbar";
@@ -181,7 +180,7 @@ const Search = () => {
   return (
     <Box bg="gray.600" w="auto" p={8}>
       <HomeNavbar />
-      <Flex justify="center">
+      <Flex pt="4" justify="center">
         <Box mr="1">
           <Select
             bg="white"
