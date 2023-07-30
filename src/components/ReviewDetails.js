@@ -1,27 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getReviewDetails } from "../redux/reviewReducer";
+import {
+  Stack,
+  Card,
+  CardBody,
+  CardHeader,
+  StackDivider,
+  Heading,
+  Box,
+  Text,
+} from "@chakra-ui/react";
 
 const ReviewDetails = () => {
   const dispatch = useDispatch();
   const { reviewId } = useParams();
-  const [review, setReview] = useState("");
+  const reviewDetailsURL = `http://localhost:8000/reviews/${reviewId}`;
   const currentHospitalReviewDetails = useSelector(
     (state) => state.reviews.reviewDetails
   );
-
-  // console.log(
-  //   currentHospitalReviewDetails
-  //     ? currentHospitalReviewDetails
-  //     : "review not present"
-  // );
-  // useEffect(() => {
-  //   fetch(`http://localhost:8000/reviews/${reviewId}`)
-  //     .then((res) => res.json())
-  //     .then((data) => setReview(data));
-  // }, [reviewId]);
-  const reviewDetailsURL = `http://localhost:8000/reviews/${reviewId}`;
+  // console.log(currentHospitalReviewDetails);
 
   useEffect(() => {
     const fetchReviewDetails = async (reviewDetailsURL) => {
@@ -35,84 +34,135 @@ const ReviewDetails = () => {
   }, [dispatch, reviewDetailsURL]);
 
   return (
-    <div className="bg-white p-4 h-full flex justify-center">
-      <div className=" w-[66%] text-center ">
-        <h1 className="text-lg p-2">
-          Overall Score:{" "}
-          <strong>{currentHospitalReviewDetails.overallScore}</strong>
-        </h1>
-        <p>
-          <strong> {currentHospitalReviewDetails.date}</strong>
-        </p>
-        <div className="border  h-auto px-auto py-auto flex justify-start">
-          <div className=" w-full p-2">
-            <div className="border p-2">
-              <h1>
-                Specialty: <strong>{review.specialty}</strong>
-              </h1>
-            </div>
-            <div className="border p-1">
-              <h1>
-                Shift:
-                <strong>
-                  <ul>
-                    {review.shift?.map((item, index) => (
-                      <li key={index}>
-                        <strong>{item}</strong>
-                      </li>
-                    ))}
-                  </ul>
-                </strong>
-              </h1>
-            </div>
-            <div className="border p-1">
-              <h1>
-                Nurse/Patient Ratio: <strong>{review.nurseRatio}</strong>
-              </h1>
-            </div>
-            <div className="border p-1">
-              <h1>
-                Charting Software: <strong>{review.chartingSoftware}</strong>
-              </h1>
-            </div>
-            <div className="border p-1">
-              <h1>
-                Accessibility: <strong>{review.accessibility}</strong>
-              </h1>
-            </div>
-            <div className="border p-1">
-              <h1>
-                Dinning Options:
-                <ul>
-                  {review.diningOptions?.map((item, index) => (
-                    <li key={index}>
-                      <strong>{item}</strong>
-                    </li>
-                  ))}
-                </ul>
-              </h1>
-            </div>
-            <h1>
-              Scrub Colors: <strong>{review.scrubColor}</strong>
-            </h1>
-            <h1>
-              Housing: <strong>{review.accommodations}</strong>
-            </h1>
-            <h1>
-              Safety: <strong>{review.safety}</strong>
-            </h1>
-            <h1>
-              Parking: <strong>{review.parking}</strong>
-            </h1>
-            <div className="bg-slate-200 p-4 border border-black">
-              <h1>
-                Comment: <strong>{review.text}</strong>
-              </h1>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Card maxW="600px" mx="33%">
+      <CardHeader>
+        <Heading size="md" textAlign="center">
+          Hospital Report
+        </Heading>
+      </CardHeader>
+      {currentHospitalReviewDetails ? (
+        <CardBody>
+          <Stack divider={<StackDivider />} spacing="4">
+            <Box>
+              <Heading size="xs" textTransform="uppercase" textAlign="center">
+                Overall Score
+              </Heading>
+              <Text pt="2" fontSize="sm" textAlign="center">
+                {currentHospitalReviewDetails.overallScore}
+              </Text>
+            </Box>
+            <Box>
+              <Heading size="xs" textTransform="uppercase" textAlign="center">
+                Dining Options
+              </Heading>
+              {currentHospitalReviewDetails?.diningOptions?.map(
+                (item, index) => (
+                  <Text key={index} pt="2" fontSize="sm" textAlign="center">
+                    {item}
+                  </Text>
+                )
+              )}
+            </Box>
+            <Box>
+              <Heading size="xs" textTransform="uppercase" textAlign="center">
+                Shift
+              </Heading>
+              <Text pt="2" fontSize="sm" textAlign="center">
+                {currentHospitalReviewDetails.shift[0]}
+              </Text>
+              <Text pt="2" fontSize="sm" textAlign="center">
+                {currentHospitalReviewDetails.shift[1]}
+              </Text>
+              <Text pt="2" fontSize="sm" textAlign="center">
+                {currentHospitalReviewDetails.shift[2]}
+              </Text>
+              <Text pt="2" fontSize="sm" textAlign="center">
+                {currentHospitalReviewDetails.shift[3]}
+              </Text>
+              <Text pt="2" fontSize="sm" textAlign="center">
+                {currentHospitalReviewDetails.shift[4]}
+              </Text>
+              <Text pt="2" fontSize="sm" textAlign="center">
+                {currentHospitalReviewDetails.shift[5]}
+              </Text>
+              <Text pt="2" fontSize="sm" textAlign="center">
+                {currentHospitalReviewDetails.shift[6]}
+              </Text>
+            </Box>
+            <Box>
+              <Heading size="xs" textTransform="uppercase" textAlign="center">
+                Nurse/Patient Ratio
+              </Heading>
+              <Text pt="2" fontSize="sm" textAlign="center">
+                {currentHospitalReviewDetails.nurseRatio}
+              </Text>
+            </Box>
+            <Box>
+              <Heading size="xs" textTransform="uppercase" textAlign="center">
+                Charting Software
+              </Heading>
+              <Text pt="2" fontSize="sm" textAlign="center">
+                {currentHospitalReviewDetails.chartingSoftware}
+              </Text>
+            </Box>
+            <Box>
+              <Heading size="xs" textTransform="uppercase" textAlign="center">
+                Accessibility
+              </Heading>
+              <Text pt="2" fontSize="sm" textAlign="center">
+                {currentHospitalReviewDetails.accessibility}
+              </Text>
+            </Box>
+            <Box>
+              <Heading size="xs" textTransform="uppercase" textAlign="center">
+                Scrub Color
+              </Heading>
+              <Text pt="2" fontSize="sm" textAlign="center">
+                {currentHospitalReviewDetails.scrubColor}
+              </Text>
+            </Box>
+            <Box>
+              <Heading size="xs" textTransform="uppercase" textAlign="center">
+                Housing
+              </Heading>
+              <Text pt="2" fontSize="sm" textAlign="center">
+                {currentHospitalReviewDetails.accommodations?.map(
+                  (item, index) => (
+                    <Text key={index}>{item}</Text>
+                  )
+                )}
+              </Text>
+            </Box>
+            <Box>
+              <Heading size="xs" textTransform="uppercase" textAlign="center">
+                Safety
+              </Heading>
+              <Text pt="2" fontSize="sm" textAlign="center">
+                {currentHospitalReviewDetails.safety}
+              </Text>
+            </Box>
+            <Box>
+              <Heading size="xs" textTransform="uppercase" textAlign="center">
+                Parking
+              </Heading>
+              <Text pt="2" fontSize="sm" textAlign="center">
+                {currentHospitalReviewDetails.parking}
+              </Text>
+            </Box>
+            <Box>
+              <Heading size="xs" textTransform="uppercase" textAlign="center">
+                Comment
+              </Heading>
+              <Text pt="2" fontSize="sm" textAlign="center">
+                {currentHospitalReviewDetails.text}
+              </Text>
+            </Box>
+          </Stack>
+        </CardBody>
+      ) : (
+        <h1>Loading...</h1>
+      )}
+    </Card>
   );
 };
 
