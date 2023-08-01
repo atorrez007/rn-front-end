@@ -1,31 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import StarRating from "./StarRating";
+import SaveItem from "./SaveItem";
+import { Image, Text } from "@chakra-ui/react";
 
-const HospitalCard = ({ name, city, state, img, id, overallScore }) => {
-  // const [score, setScore] = useState();
-  // Create an axios request for overall average score.
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:8000/hospitals/score/${id}`)
-  //     .then((response) => {
-  //       setScore(Math.floor(response.data.averageScore));
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // });
-
+const HospitalCard = ({
+  name,
+  city,
+  state,
+  img,
+  id,
+  overallScore,
+  reviews,
+}) => {
   return (
     <div className="text-center w-full max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       {/* <h1>{overallScore ? Math.floor(overallScore) : "No Reviews Left "}/10</h1> */}
 
-      <img
+      <SaveItem />
+      <Image
         className="p-8 rounded-t-lg"
         src={img}
         alt="hospital or popular city view"
       />
+
       <div className="px-5 pb-5">
         <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
           {name}
@@ -41,6 +39,9 @@ const HospitalCard = ({ name, city, state, img, id, overallScore }) => {
           <StarRating
             overallScore={overallScore ? Math.floor(overallScore) : "0"}
           />
+          <Text as="b" fontSize="sm" color="gray.500" p="4">
+            {reviews.length} reviews
+          </Text>
         </div>
         <div className="flex items-center justify-between">
           <Link

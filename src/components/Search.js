@@ -170,6 +170,7 @@ const Search = () => {
       img={hospital.img}
       id={hospital.hospitalId}
       overallScore={hospital.overallScore}
+      reviews={hospital.reviews}
     />
   ));
 
