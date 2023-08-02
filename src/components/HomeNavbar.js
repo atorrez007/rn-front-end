@@ -47,8 +47,8 @@ const HomeNavbar = () => {
   //   // console.log(jsonData);
   // };
 
-  const changePage = () => {
-    navigate("/search");
+  const changePage = (route) => {
+    navigate(`${route}`);
   };
 
   useEffect(() => {
@@ -95,6 +95,13 @@ const HomeNavbar = () => {
               <MenuList>
                 <MenuItem
                   onClick={() => {
+                    changePage("/profilePage");
+                  }}
+                >
+                  Profile
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
                     logoutFunc();
                   }}
                 >
@@ -119,7 +126,7 @@ const HomeNavbar = () => {
           <Button
             ml="8"
             onClick={() => {
-              changePage();
+              changePage("/search");
             }}
           >
             Get Hospitals

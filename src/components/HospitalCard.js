@@ -13,11 +13,19 @@ const HospitalCard = ({
   overallScore,
   reviews,
 }) => {
+  const handleSave = () => {
+    alert(`${name}, 
+    ${city},
+    ${state},
+    ${img},
+    ${id},
+    ${overallScore},
+    ${reviews}`);
+  };
   return (
     <div className="text-center w-full max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      {/* <h1>{overallScore ? Math.floor(overallScore) : "No Reviews Left "}/10</h1> */}
-
-      <SaveItem />
+      {/* prop drilling done to save items into localStorage */}
+      <SaveItem handleSave={handleSave} />
       <Image
         className="p-8 rounded-t-lg"
         src={img}

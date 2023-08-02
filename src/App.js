@@ -10,6 +10,7 @@ import ReviewDetails from "./components/ReviewDetails";
 // import EvalForm from "./components/EvalForm";
 import FormikEval from "./components/FormikEval";
 import { Box } from "@chakra-ui/react";
+import ProfilePage from "./components/ProfilePage";
 function App() {
   return (
     <Box
@@ -30,6 +31,7 @@ function App() {
             element={<ReviewDetails />}
           />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/profilePage" element={<ProfilePage />} />
         </Routes>
       </BrowserRouter>
     </Box>
