@@ -1,17 +1,18 @@
 import axios from "axios";
 
-export function getUserDetails(newUrl, token) {
+export function getUserReviews(newUrl, token) {
   return async (dispatch) => {
-    dispatch({ type: "GET_USER_DETAILS", currentUrl: newUrl });
+    dispatch({ type: "GET_USER_REVIEWS", currentUrl: newUrl });
     try {
       const response = await axios.get(newUrl, {
         headers: {
           authorization: `Bearer ${token}`,
         },
       });
+      // console.log(response.data.reviews);
       dispatch({
-        type: "GET_USER_DETAILS",
-        reviewsWritten: response.data.notconfiguredyet,
+        type: "GET_USER_REVIEWS",
+        reviewsWritten: response.data.reviews,
       });
     } catch (error) {
       console.log(error);
@@ -20,7 +21,18 @@ export function getUserDetails(newUrl, token) {
 }
 
 const initialState = {
-  userId: "",
   reviewsWritten: [],
   savedHospitals: [],
 };
+
+export default function userReducer(state = initialState, action) {
+  switch (action.type) {
+    case "GET_USER_REVIEWS":
+      return {
+        ...state,
+        reviewsWritten: action.reviewsWritten,
+      };
+    default:
+      return state;
+  }
+}
