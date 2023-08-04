@@ -2,7 +2,7 @@ import { Avatar, Box, Flex } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   Card,
   CardHeader,
@@ -15,11 +15,11 @@ import {
   SkeletonText,
 } from "@chakra-ui/react";
 import { getUserReviews } from "../redux/userReducer";
+import ReviewDashboard from "./ReviewDashboard";
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useAuth0();
-  const reviews = useSelector((state) => state.users.reviewsWritten);
 
   const changePage = (route) => {
     navigate(`${route}`);
@@ -40,7 +40,7 @@ const ProfilePage = () => {
 
   return user ? (
     <Box>
-      <Card align="center">
+      <Card align="center" mb="4">
         <CardHeader>
           <Heading size="md"> Your Dashboard</Heading>
         </CardHeader>
@@ -59,19 +59,9 @@ const ProfilePage = () => {
           </Button>
         </CardFooter>
       </Card>
-      <div>
-        {reviews ? (
-          reviews.map((review, index) => (
-            <Box key={index}>
-              <h1>{review.specialty}</h1>
-            </Box>
-          ))
-        ) : (
-          <Box padding="20" boxShadow="xl" bg="white">
-            <SkeletonText mt="4" noOfLines={4} spacing="4" skeletonHeight="2" />
-          </Box>
-        )}
-      </div>
+      <Box pl="4">
+        <ReviewDashboard />
+      </Box>
     </Box>
   ) : (
     <Box padding="20" boxShadow="xl" bg="white">
