@@ -218,7 +218,12 @@ const Search = () => {
         </form>
       </Flex>
       <Box mx="auto" maxW="6xl" mt={8}>
-        <Box bg="gray.600" className="grid grid-cols-3 gap-10">
+        <Box
+          bg="gray.600"
+          display="grid"
+          gridTemplateColumns="repeat(3, 1fr)"
+          gap="10"
+        >
           {hospitals ? hospitals : null}
         </Box>
       </Box>

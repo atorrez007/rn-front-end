@@ -6,13 +6,13 @@ const ReviewAccordion = ({ specialty, hospital }) => {
   return (
     <AccordionItem p="2">
       <h2>
-        <Box as="span" flex="1" p="2" textAlign="left">
-          <Link>
+        <Link>
+          <Box as="span" flex="1" p="2" textAlign="left">
             <Text as="b">
               {hospital.name} - (<Text as="i">{specialty}</Text>)
             </Text>
-          </Link>
-        </Box>
+          </Box>
+        </Link>
       </h2>
       <AccordionPanel pb={4}></AccordionPanel>
     </AccordionItem>

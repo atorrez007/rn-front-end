@@ -39,7 +39,7 @@ const ProfilePage = () => {
   }, [user, dispatch]);
 
   return user ? (
-    <Box>
+    <Box bg="gray.600">
       <Card align="center" mb="4">
         <CardHeader>
           <Heading size="md"> Your Dashboard</Heading>

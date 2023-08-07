@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import StarRating from "./StarRating";
 import SaveItem from "./SaveItem";
-import { Image, Text } from "@chakra-ui/react";
+import { Image, Box, Text, Flex, Button } from "@chakra-ui/react";
 
 const HospitalCard = ({
   name,
@@ -22,45 +22,58 @@ const HospitalCard = ({
     ${overallScore},
     ${reviews}`);
   };
+
   return (
-    <div className="text-center w-full max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      {/* prop drilling done to save items into localStorage */}
-      <SaveItem handleSave={handleSave} />
+    <Box
+      maxW="xs"
+      borderWidth="1px"
+      borderRadius="lg"
+      overflow="hidden"
+      bg="white"
+      boxShadow="md"
+    >
       <Image
-        className="p-8 rounded-t-lg"
+        p={8}
+        borderTopRadius="lg"
         src={img}
         alt="hospital or popular city view"
       />
-
-      <div className="px-5 pb-5">
-        <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+      <Box p={5} maxW="300px">
+        <SaveItem handleSave={handleSave} />
+        <Text fontSize="xl" fontWeight="semibold" color="gray.900">
           {name}
-        </h5>
-        <p className="text-lg text-left p-2 tracking-tight break-words text-gray-900 dark:text-white">
-          {city},
-          <span className="text-lg text-left p-1 break-words tracking-tight text-gray-900 dark:text-white">
-            {state}
-          </span>
-        </p>
-
-        <div className="flex items-center mt-2.5 mb-5">
+        </Text>
+        <Text fontSize="md" fontWeight="thin" color="gray.900">
+          {city}, {state}
+        </Text>
+        <Flex align="center" mt={2.5} mb={5}>
           <StarRating
             overallScore={overallScore ? Math.floor(overallScore) : "0"}
           />
           <Text as="b" fontSize="sm" color="gray.500" p="4">
             {reviews.length} reviews
           </Text>
-        </div>
-        <div className="flex items-center justify-between">
-          <Link
-            to={`/search/${id}`}
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            See More
+        </Flex>
+        <Flex w="250px" align="center" justify="flex-end">
+          <Link to={`/search/${id}`}>
+            <Button
+              color="white"
+              bg="blue.700"
+              _hover={{ bg: "blue.800" }}
+              _focus={{ ring: "4", outline: "none", ringColor: "blue.300" }}
+              fontWeight="medium"
+              rounded="lg"
+              fontSize="sm"
+              px={5}
+              py={2.5}
+              textAlign="center"
+            >
+              See More
+            </Button>
           </Link>
-        </div>
-      </div>
-    </div>
+        </Flex>
+      </Box>
+    </Box>
   );
 };
 

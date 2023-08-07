@@ -7,12 +7,13 @@ import { Provider } from "react-redux";
 import store from "./redux";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Auth0Provider } from "@auth0/auth0-react";
+import theme from "./theme";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 root.render(
-  <ChakraProvider>
+  <ChakraProvider theme={theme}>
     <Provider store={store}>
       <Auth0Provider
         domain={domain}
