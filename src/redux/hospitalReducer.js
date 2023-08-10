@@ -1,4 +1,5 @@
 import axios from "axios";
+// Going to need getHospitalbyId helper-method to get hospital byID in hospitalDetails.js
 export function getHospitals(newUrl, token) {
   return async (dispatch) => {
     dispatch({ type: "SET_HOSPITALS_URL", currentUrl: newUrl });
@@ -35,6 +36,7 @@ export function getAllHospitals(token) {
 }
 
 const initialState = {
+  // currentHospital
   allHospitals: [],
   hospitals: [],
   currentUrl: `http://localhost:8000/hospitals?page=1&state=&city=&query=`,

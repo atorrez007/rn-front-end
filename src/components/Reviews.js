@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { Box, Button, Center } from "@chakra-ui/react";
+import { Box, Button, Center, Flex } from "@chakra-ui/react";
 
 import { getHospitals } from "../redux/hospitalReducer";
 import { getReviews } from "../redux/reviewReducer";
@@ -97,10 +97,7 @@ const Reviews = () => {
   const reviewBreakdown = currentHospitalReviews.map((review) => {
     return (
       // <Link key={review._id} to={`/search/${hospitalId}/${review._id}`}>
-      <AccordionItem
-        key={review._id}
-        className="bg-slate-400 flex p-2 w-full h-[66%] items-center border border-black"
-      >
+      <AccordionItem key={review._id}>
         <h2>
           <AccordionButton _expanded={{ color: "white" }}>
             <Box as="span" flex="1" textAlign="center">
@@ -126,20 +123,18 @@ const Reviews = () => {
   });
 
   return (
-    <div>
-      <Box as="div" display="inline-flex" justifyContent="center">
-        <Button
-          mr="4"
-          mb="2"
-          ç
-          colorScheme="yellow"
-          onClick={() => {
-            handleBackClick();
-          }}
-        >
-          Back
-        </Button>
-        <Box>
+    <Flex direction="column" alignItems="center">
+      <Box width="550px" py="4">
+        <Box as="div" display="flex" justifyContent="center" mb="2">
+          <Button
+            mr="4"
+            colorScheme="yellow"
+            onClick={() => {
+              handleBackClick();
+            }}
+          >
+            Back
+          </Button>
           <Button
             colorScheme="green"
             onClick={() => {
@@ -149,13 +144,13 @@ const Reviews = () => {
             Add Review
           </Button>
         </Box>
+        <Center>
+          <Accordion width="100%" alignItems="center" allowMultiple>
+            {reviewBreakdown}
+          </Accordion>
+        </Center>
       </Box>
-      <Center>
-        <Accordion width="66%" alignItems="center" allowMultiple>
-          {reviewBreakdown}
-        </Accordion>
-      </Center>
-    </div>
+    </Flex>
   );
 };
 

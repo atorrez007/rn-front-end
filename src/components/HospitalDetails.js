@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "./Navbar";
+import { Box, Heading, Image, Text } from "@chakra-ui/react";
+
 import Reviews from "./Reviews";
-// import { Button } from "@chakra-ui/react";
 
 const HospitalDetails = () => {
   const [thisHospital, setThisHospital] = useState([]);
@@ -14,52 +14,47 @@ const HospitalDetails = () => {
       .then((data) => setThisHospital(data));
   }, [hospitalId]);
 
-  // Temporary solution, but will eliminate the need for the more specific endpoint. A link between the db and the id being used will need to be implemented.
-
-  // const targetHospital = thisHospital.find(
-  //   (hospital) => hospital.hospitalId === hospitalId
-  // );
-
-  // <div>
-  //   <h1>Hospital Details</h1>
-  //   <h1>{targetHospital ? targetHospital.name : null}</h1>
-  //   <p>{targetHospital ? targetHospital.address : null}</p>
-  //   <p>{targetHospital ? targetHospital.city : null}</p>
-  //   <p>{targetHospital ? targetHospital.zipCode : null}</p>
-  //   <p>{targetHospital ? targetHospital.county : null}</p>
-  //   <p>{targetHospital ? targetHospital.phoneNumber : null}</p>
-  //   <Link to={`/search/${hospitalId}/reviews`}>
-  //     <h1>Reviews</h1>
-  //   </Link>
-  // </div>
-
   return (
-    <div className="flex bg-wetfloor-500">
-      <Navbar />
-      <div className="flex justify-center w-full">
-        <div className="text-center w-full h-full border bg-white-border bg-white border-gray-200  dark:bg-gray-800 dark:border-gray-700 rounded overflow-hidden shadow-lg ">
-          <img
-            className=" mt-3 w-[532px] h-[356px] mx-auto my-auto"
+    <Box bg="wetfloor.500" display="flex">
+      <Box h="100vh" flex="1" display="flex" justifyContent="center">
+        <Box
+          textAlign="center"
+          width="full"
+          height="full"
+          border="1px"
+          bg="white"
+          borderColor="gray.200"
+          borderRadius="md"
+          overflow="hidden"
+          shadow="md"
+        >
+          <Image
+            mt={3}
+            width="532px"
+            height="356px"
+            mx="auto"
+            my="auto"
             src={thisHospital ? thisHospital.img : null}
             alt="hospital or city view"
           />
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">
-              <h1>{thisHospital ? thisHospital.name : null}</h1>
-            </div>
-            <div className="text-gray-700 text-base">
-              <p>{thisHospital ? thisHospital.address : null}</p>
-              <p>{thisHospital ? thisHospital.city : null}</p>
-              <p>{thisHospital ? thisHospital.zipCode : null}</p>
-              <p>{thisHospital ? thisHospital.county : null}</p>
-            </div>
-          </div>
-          <div className="px-6 pt-4 pb-2">
+
+          <Box px={6} py={4}>
+            <Box fontWeight="bold" fontSize="xl" mb={2}>
+              <Heading>{thisHospital ? thisHospital.name : null}</Heading>
+            </Box>
+            <Box color="gray.700" fontSize="base">
+              <Text>{thisHospital ? thisHospital.address : null}</Text>
+              <Text>{thisHospital ? thisHospital.city : null}</Text>
+              <Text>{thisHospital ? thisHospital.zipCode : null}</Text>
+              <Text>{thisHospital ? thisHospital.county : null}</Text>
+            </Box>
+          </Box>
+          <Box px={6} pt={4} pb={2}>
             <Reviews />
-          </div>
-        </div>
-      </div>
-    </div>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
