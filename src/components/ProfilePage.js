@@ -17,6 +17,7 @@ import {
 import { getUserReviews } from "../redux/userReducer";
 import ReviewDashboard from "./ReviewDashboard";
 const ProfilePage = () => {
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useAuth0();
@@ -28,7 +29,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const getUserDetails = async () => {
       if (user) {
-        const userURL = `http://localhost:8000/users/${user.sub}`;
+        const userURL = `${baseURL}/users/${user.sub}`;
         dispatch(getUserReviews(userURL));
         // console.log(userURL);
       } else {
@@ -36,7 +37,7 @@ const ProfilePage = () => {
       }
     };
     getUserDetails();
-  }, [user, dispatch]);
+  }, [user, dispatch, baseURL]);
 
   return user ? (
     <Box bg="gray.600">

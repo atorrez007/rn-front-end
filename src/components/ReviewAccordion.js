@@ -2,6 +2,8 @@ import { AccordionItem, AccordionPanel, Box, Text } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
 
+// Review accordion appears under the user's profile page for submitted hospital reviews.
+
 const ReviewAccordion = ({ specialty, hospital }) => {
   return (
     <AccordionItem p="2">

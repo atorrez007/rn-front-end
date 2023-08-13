@@ -42,6 +42,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const EvalForm = () => {
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
   const { hospitalId } = useParams();
   const { user } = useAuth0();
 
@@ -63,7 +64,7 @@ const EvalForm = () => {
       // console.log(values);
       setTimeout(() => {
         axios
-          .post(`http://localhost:8000/hospitals/${hospitalId}/reviews`, {
+          .post(`${baseURL}/hospitals/${hospitalId}/reviews`, {
             values,
             user: {
               sub: user.sub,

@@ -11,6 +11,7 @@ import Profile from "./Profile";
 import { useNavigate } from "react-router-dom";
 
 const HomeNavbar = () => {
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const { loginWithPopup } = useAuth0();
@@ -57,7 +58,7 @@ const HomeNavbar = () => {
         if (user) {
           // console.log(user);
           await axios
-            .post("http://localhost:8000/signup", {
+            .post(`${baseURL}/signup`, {
               auth0sub: user.sub,
               nickname: user.nickname,
               email: user.email,
@@ -75,7 +76,7 @@ const HomeNavbar = () => {
       }
     };
     sendAuthDetails();
-  }, [user]);
+  }, [user, baseURL]);
 
   return (
     <Flex

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getReviewDetails } from "../redux/reviewReducer";
 import {
   Stack,
@@ -11,16 +11,24 @@ import {
   Heading,
   Box,
   Text,
+  Spinner,
+  Button,
 } from "@chakra-ui/react";
 
 const ReviewDetails = () => {
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
   const dispatch = useDispatch();
-  const { reviewId } = useParams();
-  const reviewDetailsURL = `http://localhost:8000/reviews/${reviewId}`;
+  const { reviewId, hospitalId } = useParams();
+  const navigate = useNavigate();
+  const reviewDetailsURL = `${baseURL}/reviews/${reviewId}`;
   const currentHospitalReviewDetails = useSelector(
     (state) => state.reviews.reviewDetails
   );
   // console.log(currentHospitalReviewDetails);
+
+  const handleReturn = (reviewId) => {
+    navigate(`/search/${reviewId}`);
+  };
 
   useEffect(() => {
     const fetchReviewDetails = async (reviewDetailsURL) => {
@@ -34,14 +42,21 @@ const ReviewDetails = () => {
   }, [dispatch, reviewDetailsURL]);
 
   return (
-    <Card maxW="600px" mx="33%">
+    <Card maxW="600px" mx="33%" pt="4" py="4" mt="8">
+      <Button
+        onClick={() => {
+          handleReturn(hospitalId);
+        }}
+      >
+        Back to Reviews
+      </Button>
       <CardHeader>
         <Heading size="md" textAlign="center">
           Hospital Report
         </Heading>
       </CardHeader>
       {currentHospitalReviewDetails ? (
-        <CardBody>
+        <CardBody style={{ maxHeight: "600px", overflowY: "auto" }}>
           <Stack divider={<StackDivider />} spacing="4">
             <Box>
               <Heading size="xs" textTransform="uppercase" textAlign="center">
@@ -125,7 +140,7 @@ const ReviewDetails = () => {
               <Heading size="xs" textTransform="uppercase" textAlign="center">
                 Housing
               </Heading>
-              <Text pt="2" fontSize="sm" textAlign="center">
+              <Text as="div" pt="2" fontSize="sm" textAlign="center">
                 {currentHospitalReviewDetails.accommodations?.map(
                   (item, index) => (
                     <Text key={index}>{item}</Text>
@@ -160,7 +175,7 @@ const ReviewDetails = () => {
           </Stack>
         </CardBody>
       ) : (
-        <h1>Loading...</h1>
+        <Spinner size="xl" />
       )}
     </Card>
   );

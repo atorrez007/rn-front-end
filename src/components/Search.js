@@ -9,6 +9,9 @@ import HomeNavbar from "../components/HomeNavbar";
 // import { useAuth0 } from "@auth0/auth0-react";
 // Previously the <Link> was used to wrap all the hospitals in a link, but now the link is entered into the hospital card component. If we want to change accessibility to allow clicking anywhere on the card, we can revert to putting the link in the hospitalData.map once again.
 const Search = () => {
+  // Might need a || for development api keys.
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
+  // console.log(process.env.REACT_APP_API_DEVELOPMENT);
   const dispatch = useDispatch();
 
   const allHospitals = useSelector((state) => state.hospitals.allHospitals);
@@ -76,7 +79,7 @@ const Search = () => {
   };
   // url sent to Redux for backend query
   // add query to string.
-  const url = `http://localhost:8000/hospitals?page=${page}&state=${state}&city=${city}&query=${query}`;
+  const url = `${baseURL}/hospitals?page=${page}&state=${state}&city=${city}&query=${query}`;
 
   useEffect(() => {
     const fetchData = async () => {
