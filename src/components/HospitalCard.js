@@ -26,20 +26,45 @@ const HospitalCard = ({
   return (
     <Box
       maxW="xs"
-      borderWidth="1px"
-      borderRadius="lg"
+      // borderWidth="1px"
+      // borderRadius="lg"
       overflow="hidden"
       bg="white"
       boxShadow="md"
+      transition="transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1)"
+      _hover={{
+        transform: "scale(1.05)",
+      }}
     >
-      <Image
-        p={8}
-        borderTopRadius="lg"
-        src={img}
-        alt="hospital or popular city view"
-      />
+      <Box position="relative">
+        <Image
+          // p={8}
+          // borderTopRadius="lg"
+          src={img}
+          alt="hospital or popular city view"
+        />
+        <Box
+          position="absolute"
+          top="8px"
+          right="8px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          bg="white"
+          borderRadius="50%"
+          width="35px"
+          height="35px"
+          boxShadow="md"
+          pt="2"
+        >
+          <SaveItem
+            style={{ margin: "auto", transform: "translateY(4px)" }}
+            handleSave={handleSave}
+          />
+        </Box>
+      </Box>
       <Box p={5} maxW="300px">
-        <SaveItem handleSave={handleSave} />
+        {/* <SaveItem handleSave={handleSave} /> */}
         <Text fontSize="xl" fontWeight="semibold" color="gray.900">
           {name}
         </Text>
