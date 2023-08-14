@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { Box, Button, Flex, Image, Spacer } from "@chakra-ui/react";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import mainLogo from "../assets/RN-reviews now 2.png";
+import mainLogo from "../assets/rn-logo.png";
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Profile";
 import { useNavigate } from "react-router-dom";
@@ -81,12 +81,15 @@ const HomeNavbar = () => {
   return (
     <Flex
       bg="#737373"
-      w="auto"
-      h="150px"
+      w="100%"
+      h="130px"
       p="3"
       m="1"
       borderRadius="10"
       borderColor="black"
+      alignItems="start"
+      justifyContent="space-between"
+      flexDirection={{ base: "column", md: "row" }}
     >
       <Profile />
       {isAuthenticated && user ? (
@@ -153,36 +156,22 @@ const HomeNavbar = () => {
         </Box>
       )}
 
-      <Spacer />
-
-      {/* <Box w="649px" h="-140px">
-        <Image alt="RN-Logo" src={mainLogo} w="649px" h="138px" />
-      </Box> */}
+      {/* <Spacer /> */}
 
       <Box flex="2" display="flex" justifyContent="center" alignItems="center">
         <Image
           alt="RN-Logo"
           src={mainLogo}
-          w="350px"
+          pl="3"
+          w={{ base: "80%", md: "400px" }}
           h="81px"
+          ml="75px"
           // maxWidth="800px"
           // maxHeight="300px"
         />
       </Box>
 
       <Spacer />
-
-      {/* <Input
-        _hover={{ boxShadow: "dark-lg" }}
-        _focus={{ boxShadow: "dark-lg" }}
-        bg="rgb(237,242,247)"
-        border="none"
-        boxShadow="dark-lg"
-        mt="8"
-        textAlign="left"
-        placeholder="Where to next?"
-        w="sm"
-      /> */}
     </Flex>
   );
 };
