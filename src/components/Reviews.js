@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { Box, Button, Center, Flex } from "@chakra-ui/react";
-
+import { Box, Button, Center, Flex, Text } from "@chakra-ui/react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { getHospitals } from "../redux/hospitalReducer";
 import { getReviews } from "../redux/reviewReducer";
 import {
@@ -20,6 +21,7 @@ const Reviews = () => {
   const dispatch = useDispatch();
   const currentUrl = useSelector((state) => state.hospitals.currentUrl);
   const currentHospitalReviews = useSelector((state) => state.reviews.reviews);
+  dayjs.extend(relativeTime);
   // console.log(currentHospitalReviews);
   // const reduxURL = useSelector((state) => state.reviews.currentUrl);
 
@@ -36,18 +38,6 @@ const Reviews = () => {
     fetchReviewData(currentReviewURL);
   }, [dispatch, currentReviewURL]);
 
-  // Replace this useEffect with the reviewReducer to get review data.
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:8000/hospitals/${hospitalId}/reviews`)
-  //     .then((response) => {
-  //       setReviews(response.data[0].reviews);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, [hospitalId]);
-
   const handleReviewChange = (reviewId) => {
     navigate(`/search/${hospitalId}/${reviewId}`);
   };
@@ -61,46 +51,19 @@ const Reviews = () => {
     dispatch(getHospitals(currentUrl));
   };
 
-  // Reviews from api request. To be deleted.
-  // const reviewBreakdown = reviews.map((review) => {
-  //   return (
-  //     // <Link key={review._id} to={`/search/${hospitalId}/${review._id}`}>
-  //     <tr
-  //       key={review._id}
-  //       className="bg-slate-400 flex p-2 w-full h-[66%] items-center border border-black"
-  //       onClick={() => {
-  //         handleReviewChange(review._id);
-  //       }}
-  //     >
-  //       <td>{review.overallScore}</td>
-  //     </tr>
-  //     // </Link>
-  //   );
-  // });
-
-  // const reviewBreakdown = currentHospitalReviews.map((review) => {
-  //   return (
-  //     // <Link key={review._id} to={`/search/${hospitalId}/${review._id}`}>
-  //     <tr
-  //       key={review._id}
-  //       className="bg-slate-400 flex p-2 w-full h-[66%] items-center border border-black"
-  //       onClick={() => {
-  //         handleReviewChange(review._id);
-  //       }}
-  //     >
-  //       <td>{review.overallScore}</td>
-  //     </tr>
-  //     // </Link>
-  //   );
-  // });
-
   const reviewBreakdown = currentHospitalReviews.map((review) => {
+    // const shortDayFormat = dayjs(review.date).format("MM/DD/YY");
+    const relativeTime = dayjs(review.date).fromNow();
+
     return (
       // <Link key={review._id} to={`/search/${hospitalId}/${review._id}`}>
       <AccordionItem key={review._id}>
         <h2>
-          <AccordionButton _expanded={{ color: "white" }}>
-            <Box as="span" flex="1" textAlign="center">
+          <AccordionButton _expanded={{ color: "gray" }}>
+            <Text as="i" flexShrink={0} marginRight={2}>
+              {relativeTime}
+            </Text>
+            <Box flex="1" mr="4" textAlign="end">
               {review.overallScore}
             </Box>
             <AccordionIcon />
@@ -118,6 +81,7 @@ const Reviews = () => {
           </Button>
         </AccordionPanel>
       </AccordionItem>
+
       // </Link>
     );
   });
