@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -41,14 +41,14 @@ const validationSchema = Yup.object().shape({
   safety: Yup.string().required("Required"),
   parking: Yup.string().required("Required"),
   overallScore: Yup.number().required("Required"),
-  text: Yup.string().max(140, "Must be 140 characters or less."),
+  text: Yup.string().max(250, "Must be 250 characters or less."),
 });
 
 const EvalForm = () => {
   const baseURL = process.env.REACT_APP_API_BASE_URL;
   const { hospitalId } = useParams();
   const { user } = useAuth0();
-
+  const [characterCount] = useState(250);
   const navigate = useNavigate();
   const toast = useToast();
   const toastAlert = () => {
@@ -734,6 +734,9 @@ const EvalForm = () => {
                   onChange={formik.handleChange}
                   placeholder="Leave a comment about your experience."
                 ></Textarea>
+                <Text pt="2" fontSize="sm" color="gray">
+                  {characterCount - formik.values.text.length} / 250
+                </Text>
               </Box>
             </FormControl>
             <Button colorScheme="teal" type="submit">

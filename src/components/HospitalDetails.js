@@ -15,8 +15,8 @@ const HospitalDetails = () => {
   }, [hospitalId]);
 
   return (
-    <Box bg="wetfloor.500" display="flex">
-      <Box h="100vh" flex="1" display="flex" justifyContent="center">
+    <Box display="flex">
+      <Box flex="1" display="flex" justifyContent="center">
         <Box
           textAlign="center"
           width="full"

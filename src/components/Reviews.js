@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { Box, Button, Center, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Card, CardFooter, Text } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { getHospitals } from "../redux/hospitalReducer";
@@ -57,6 +57,7 @@ const Reviews = () => {
 
     return (
       // <Link key={review._id} to={`/search/${hospitalId}/${review._id}`}>
+
       <AccordionItem key={review._id}>
         <h2>
           <AccordionButton _expanded={{ color: "gray" }}>
@@ -71,24 +72,24 @@ const Reviews = () => {
         </h2>
         <AccordionPanel pb={8}>
           {review.text}
-          <Button
-            m="4"
-            onClick={() => {
-              handleReviewChange(review._id);
-            }}
-          >
-            See more
-          </Button>
+          <Box>
+            <Button
+              m="4"
+              onClick={() => {
+                handleReviewChange(review._id);
+              }}
+            >
+              See more
+            </Button>
+          </Box>
         </AccordionPanel>
       </AccordionItem>
-
-      // </Link>
     );
   });
 
   return (
-    <Flex direction="column" alignItems="center">
-      <Box width="550px" py="4">
+    <Card direction="column" alignItems="center">
+      <Box width="550px" height="auto" py="4">
         <Box as="div" display="flex" justifyContent="center" mb="2">
           <Button
             mr="4"
@@ -108,13 +109,13 @@ const Reviews = () => {
             Add Review
           </Button>
         </Box>
-        <Center>
-          <Accordion width="100%" alignItems="center" allowMultiple>
-            {reviewBreakdown}
-          </Accordion>
-        </Center>
+
+        <Accordion width="100%" height="100%" alignItems="center" allowMultiple>
+          {reviewBreakdown}
+        </Accordion>
       </Box>
-    </Flex>
+      <CardFooter height="250px"></CardFooter>
+    </Card>
   );
 };
 
