@@ -23,6 +23,8 @@ import {
   useDisclosure,
   Spinner,
   useToast,
+  Textarea,
+  Text,
 } from "@chakra-ui/react";
 import { useAuth0 } from "@auth0/auth0-react";
 const validationSchema = Yup.object().shape({
@@ -39,6 +41,7 @@ const validationSchema = Yup.object().shape({
   safety: Yup.string().required("Required"),
   parking: Yup.string().required("Required"),
   overallScore: Yup.number().required("Required"),
+  text: Yup.string().max(140, "Must be 140 characters or less."),
 });
 
 const EvalForm = () => {
@@ -97,6 +100,7 @@ const EvalForm = () => {
       safety: "",
       parking: "",
       overallScore: 0,
+      text: "",
     },
     validationSchema: validationSchema,
     onSubmit: onSubmit,
@@ -714,6 +718,23 @@ const EvalForm = () => {
                   </Radio>
                 </Stack>
               </RadioGroup>
+            </FormControl>
+            <FormControl>
+              <FormLabel>Comments</FormLabel>
+              <Box pb="3" mb="2">
+                <Box style={{ color: "red" }}>
+                  <Text as="i">
+                    {formik.errors.text ? formik.errors.text : null}
+                  </Text>
+                </Box>
+                <Textarea
+                  type="text"
+                  name="text"
+                  value={formik.values.text}
+                  onChange={formik.handleChange}
+                  placeholder="Leave a comment about your experience."
+                ></Textarea>
+              </Box>
             </FormControl>
             <Button colorScheme="teal" type="submit">
               Submit
