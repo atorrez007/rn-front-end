@@ -1,18 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Box, Heading, Image, Text } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Reviews from "./Reviews";
+import { getSelectedHospital } from "../redux/hospitalReducer";
 
 const HospitalDetails = () => {
-  const [thisHospital, setThisHospital] = useState([]);
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
+  const dispatch = useDispatch();
   const { hospitalId } = useParams();
+  const url = `${baseURL}/hospitals/${hospitalId}`;
+  const selectedHospital = useSelector(
+    (state) => state.hospitals.selectedHospital
+  );
 
   useEffect(() => {
-    fetch(`http://localhost:8000/hospitals/${hospitalId}`)
-      .then((res) => res.json())
-      .then((data) => setThisHospital(data));
-  }, [hospitalId]);
+    const fetchData = async () => {
+      try {
+        dispatch(getSelectedHospital(url));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [url, dispatch]);
 
   return (
     <Box display="flex">
@@ -34,19 +46,21 @@ const HospitalDetails = () => {
             height="356px"
             mx="auto"
             my="auto"
-            src={thisHospital ? thisHospital.img : null}
+            src={selectedHospital ? selectedHospital.img : null}
             alt="hospital or city view"
           />
 
           <Box px={6} py={4}>
             <Box fontWeight="bold" fontSize="xl" mb={2}>
-              <Heading>{thisHospital ? thisHospital.name : null}</Heading>
+              <Heading>
+                {selectedHospital ? selectedHospital.name : null}
+              </Heading>
             </Box>
             <Box color="gray.700" fontSize="base">
-              <Text>{thisHospital ? thisHospital.address : null}</Text>
-              <Text>{thisHospital ? thisHospital.city : null}</Text>
-              <Text>{thisHospital ? thisHospital.zipCode : null}</Text>
-              <Text>{thisHospital ? thisHospital.county : null}</Text>
+              <Text>{selectedHospital ? selectedHospital.address : null}</Text>
+              <Text>{selectedHospital ? selectedHospital.city : null}</Text>
+              <Text>{selectedHospital ? selectedHospital.zipCode : null}</Text>
+              <Text>{selectedHospital ? selectedHospital.county : null}</Text>
             </Box>
           </Box>
           <Box px={6} pt={4} pb={2}>

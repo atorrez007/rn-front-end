@@ -35,10 +35,29 @@ export function getAllHospitals(token) {
   };
 }
 
+export function getSelectedHospital(newUrl, token) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(newUrl, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch({
+        type: "GET_SELECTED_HOSPITAL",
+        selectedHospital: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 const initialState = {
   // currentHospital
   allHospitals: [],
   hospitals: [],
+  selectedHospital: [],
   currentUrl: `http://localhost:8000/hospitals?page=1&state=&city=&query=`,
   loading: false,
   error: null,
@@ -70,6 +89,11 @@ export default function hospitalReducer(state = initialState, action) {
       return {
         ...state,
         allHospitals: action.allHospitals,
+      };
+    case "GET_SELECTED_HOSPITAL":
+      return {
+        ...state,
+        selectedHospital: action.selectedHospital,
       };
     default:
       return state;
