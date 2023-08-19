@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import StarRating from "./StarRating";
 import SaveItem from "./SaveItem";
-import { useDispatch } from "react-redux";
-import { Image, Box, Text, Flex, Button } from "@chakra-ui/react";
-import { saveHospital } from "../redux/userReducer";
 
+import { Image, Box, Text, Flex, Button } from "@chakra-ui/react";
+
+import { useAuth0 } from "@auth0/auth0-react";
 const HospitalCard = ({
   name,
   city,
@@ -15,18 +15,31 @@ const HospitalCard = ({
   overallScore,
   reviews,
 }) => {
-  const dispatch = useDispatch();
+  const { user } = useAuth0();
   const handleSave = () => {
-    const hospitalObject = {
-      name,
-      city,
-      state,
-      img,
-      id,
-      overallScore,
-    };
+    if (user) {
+      const hospitalObject = {
+        name,
+        city,
+        state,
+        img,
+        id,
+        overallScore,
+      };
+      // This will get the existing hospital list for the user from localStorage
+      const userHospitalListKey = `hospitalList_${user.sub}`;
 
-    dispatch(saveHospital(hospitalObject));
+      const existingHospitalList =
+        JSON.parse(localStorage.getItem(userHospitalListKey)) || [];
+
+      // Update the hospital list will be updated and then stored it in localStorage
+      const updatedHospitalList = [...existingHospitalList, hospitalObject];
+      localStorage.setItem(
+        userHospitalListKey,
+        JSON.stringify(updatedHospitalList)
+      );
+      // dispatch(saveHospital(hospitalObject));
+    }
   };
 
   return (

@@ -7,49 +7,16 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
-import { useSelector } from "react-redux";
 
 import HospitalAccordion from "./components/HospitalAccordion";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const SavedHospitalsDashboard = () => {
-  const savedHospitals = useSelector((state) => state.users.savedHospitals);
+  // const savedHospitals = useSelector((state) => state.users.savedHospitals);
+  const { user } = useAuth0();
 
-  // const mappedHospitals = savedHospitals.map((item, index) => {
-  //   return (
-  //     <VStack spacing={4} align="stretch">
-  // <Card
-  //   key={index}
-  //   w="100%"
-  //   direction={{ base: "column", sm: "row" }}
-  //   overflow="hidden"
-  //   variant="outline"
-  // >
-  //   <Image
-  //     objectFit="cover"
-  //     maxW={{ base: "100%", sm: "200px" }}
-  //     src={item.img}
-  //     alt="Caffe Latte"
-  //   />
-
-  //   <Stack>
-  //     <CardBody>
-  //       <Heading size="md">{item.name}</Heading>
-
-  //       <Text py="2">
-  //         {item.city}, {item.state}
-  //       </Text>
-  //     </CardBody>
-
-  //     <CardFooter>
-  //       <Button variant="solid" colorScheme="blue">
-  //         Go To Hospital
-  //       </Button>
-  //     </CardFooter>
-  //   </Stack>
-  // </Card>
-  //     </VStack>
-  //   );
-  // });
+  const existingHospitalList =
+    JSON.parse(localStorage.getItem(`hospitalList_${user.sub}`)) || [];
 
   return (
     <Box style={{ height: "600px", width: "1200px", overflow: "hidden" }}>
@@ -59,8 +26,8 @@ const SavedHospitalsDashboard = () => {
         </CardHeader>
         <CardBody>
           <Accordion defaultIndex={[0]} allowMultiple>
-            {savedHospitals ? (
-              savedHospitals.map((hospital, index) => (
+            {existingHospitalList ? (
+              existingHospitalList.map((hospital, index) => (
                 <HospitalAccordion
                   key={index}
                   name={hospital.name}
