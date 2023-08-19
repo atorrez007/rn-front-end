@@ -9,7 +9,6 @@ export function getUserReviews(newUrl, token) {
           authorization: `Bearer ${token}`,
         },
       });
-      // console.log(response.data.reviews);
       dispatch({
         type: "GET_USER_REVIEWS",
         reviewsWritten: response.data.reviews,
@@ -17,6 +16,15 @@ export function getUserReviews(newUrl, token) {
     } catch (error) {
       console.log(error);
     }
+  };
+}
+
+export function saveHospital(hospitalObject) {
+  return (dispatch) => {
+    dispatch({
+      type: "SAVE_HOSPITAL",
+      savedHospitals: hospitalObject,
+    });
   };
 }
 
@@ -31,6 +39,10 @@ export default function userReducer(state = initialState, action) {
       return {
         ...state,
         reviewsWritten: action.reviewsWritten,
+      };
+    case "SAVE_HOSPITAL":
+      return {
+        savedHospitals: [...state.savedHospitals, action.savedHospitals],
       };
     default:
       return state;

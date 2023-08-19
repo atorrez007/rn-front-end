@@ -84,7 +84,7 @@ const HomeNavbar = () => {
       w="100%"
       h="130px"
       p="3"
-      m="1"
+      mt="3"
       borderRadius="10"
       borderColor="black"
       alignItems="start"

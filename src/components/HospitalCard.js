@@ -2,7 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import StarRating from "./StarRating";
 import SaveItem from "./SaveItem";
+import { useDispatch } from "react-redux";
 import { Image, Box, Text, Flex, Button } from "@chakra-ui/react";
+import { saveHospital } from "../redux/userReducer";
 
 const HospitalCard = ({
   name,
@@ -13,14 +15,18 @@ const HospitalCard = ({
   overallScore,
   reviews,
 }) => {
+  const dispatch = useDispatch();
   const handleSave = () => {
-    alert(`${name}, 
-    ${city},
-    ${state},
-    ${img},
-    ${id},
-    ${overallScore},
-    ${reviews}`);
+    const hospitalObject = {
+      name,
+      city,
+      state,
+      img,
+      id,
+      overallScore,
+    };
+
+    dispatch(saveHospital(hospitalObject));
   };
 
   return (

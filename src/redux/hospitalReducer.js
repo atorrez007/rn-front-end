@@ -1,4 +1,5 @@
 import axios from "axios";
+import userReducer from "./userReducer";
 // Going to need getHospitalbyId helper-method to get hospital byID in hospitalDetails.js
 export function getHospitals(newUrl, token) {
   return async (dispatch) => {
@@ -43,6 +44,7 @@ export function getSelectedHospital(newUrl, token) {
           authorization: `Bearer ${token}`,
         },
       });
+      // Can I dispatch user's savedHospitals helper methods and store the selected hospital payload into the user's savedHospitals?
       dispatch({
         type: "GET_SELECTED_HOSPITAL",
         selectedHospital: response.data,

@@ -7,7 +7,9 @@ export default function SaveItem({ handleSave }) {
   const styleUnliked = { fontSize: "1.2em" };
   const [isClick, setClick] = useState(false);
   const setLike = () => {
-    handleSave();
+    if (!isClick) {
+      handleSave();
+    }
     setClick(!isClick);
   };
   return (

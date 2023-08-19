@@ -182,7 +182,7 @@ const Search = () => {
   // );
 
   return (
-    <Box bg="gray.600" w="auto" p={8}>
+    <Box bg="gray.600" w="100%">
       <HomeNavbar />
       <Flex pt="4" justify="center">
         <Box mr="1">

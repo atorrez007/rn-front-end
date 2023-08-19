@@ -16,7 +16,7 @@ const ReviewDashboard = () => {
   // const reviews = [1, 2, 3];
   return (
     <Box style={{ height: "600px", width: "1200px", overflow: "hidden" }}>
-      <Card pt="2" w="33%" style={{ height: "100%", overflowY: "auto" }}>
+      <Card pt="2" w="500px" style={{ height: "100%", overflowY: "auto" }}>
         <CardHeader size="xl">
           <Text as="b">Your Reviews</Text>
         </CardHeader>

@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { getUserReviews } from "../redux/userReducer";
 import ReviewDashboard from "./ReviewDashboard";
+import SavedHospitalsDashboard from "../SavedHospitalsDashboard";
 const ProfilePage = () => {
   const baseURL = process.env.REACT_APP_API_BASE_URL;
   const dispatch = useDispatch();
@@ -40,8 +41,8 @@ const ProfilePage = () => {
   }, [user, dispatch, baseURL]);
 
   return user ? (
-    <Box bg="gray.600">
-      <Card align="center" mb="4">
+    <Box>
+      <Card align="center" mb="4" overflow="auto">
         <CardHeader>
           <Heading size="md"> Your Dashboard</Heading>
         </CardHeader>
@@ -60,9 +61,11 @@ const ProfilePage = () => {
           </Button>
         </CardFooter>
       </Card>
-      <Box pl="4">
+      <Flex justify="center" spacing={4} ml={20} pl={20}>
         <ReviewDashboard />
-      </Box>
+
+        <SavedHospitalsDashboard />
+      </Flex>
     </Box>
   ) : (
     <Box padding="20" boxShadow="xl" bg="white">

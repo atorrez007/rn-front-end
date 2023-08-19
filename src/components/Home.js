@@ -1,5 +1,6 @@
 import React from "react";
 import HomeNavbar from "./HomeNavbar";
+import { Box } from "@chakra-ui/react";
 
 // 3 quadrants.
 // 1. Top page explains the about.
@@ -8,9 +9,9 @@ import HomeNavbar from "./HomeNavbar";
 
 const Home = () => {
   return (
-    <div>
+    <Box>
       <HomeNavbar />
-    </div>
+    </Box>
   );
 };
 
