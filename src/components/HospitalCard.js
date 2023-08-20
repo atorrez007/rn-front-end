@@ -6,6 +6,7 @@ import SaveItem from "./SaveItem";
 import { Image, Box, Text, Flex, Button, Skeleton } from "@chakra-ui/react";
 
 import { useAuth0 } from "@auth0/auth0-react";
+
 const HospitalCard = ({
   name,
   city,

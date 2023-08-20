@@ -10,22 +10,37 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { CloseIcon } from "@chakra-ui/icons";
 import React from "react";
 import { Link } from "react-router-dom";
 import StarRating from "./StarRating";
-
+import { useAuth0 } from "@auth0/auth0-react";
 // Review accordion appears under the user's profile page for submitted hospital reviews.
 
-const HospitalAccordion = ({ name, city, state, img, overallScore }) => {
+const HospitalAccordion = ({ name, city, state, img, overallScore, id }) => {
+  const { user } = useAuth0();
+  const handleUnsave = () => {
+    if (user) {
+      const userHospitalListKey = `hospitalList_${user.sub}`;
+
+      const existingHospitalList =
+        JSON.parse(localStorage.getItem(userHospitalListKey)) || [];
+
+      const updatedHospitalList = existingHospitalList.filter(
+        (hospital) => hospital.id !== id
+      );
+
+      localStorage.setItem(
+        userHospitalListKey,
+        JSON.stringify(updatedHospitalList)
+      );
+    }
+  };
+
   return (
     <AccordionItem p="2">
       <h2>
         <Link>
-          {/* <Box as="span" flex="1" p="2" textAlign="left">
-            <Img src={img} h="60px" />
-            <Text as="b">{name}</Text>
-            <Text as="i"> - {state}</Text>
-          </Box> */}
           <Card
             // key={}
             w="100%"
@@ -40,7 +55,16 @@ const HospitalAccordion = ({ name, city, state, img, overallScore }) => {
               alt="Caffe Latte"
             />
 
-            <Stack>
+            <Stack display="flex">
+              <Button
+                bg="red.500"
+                _hover={{ bg: "red.400" }}
+                ml="180px"
+                p="2"
+                onClick={handleUnsave}
+              >
+                <CloseIcon focusable="true">X</CloseIcon>
+              </Button>
               <CardBody>
                 <Heading size="md">{name}</Heading>
 
