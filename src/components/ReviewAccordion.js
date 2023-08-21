@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 // Review accordion appears under the user's profile page for submitted hospital reviews.
 
-const ReviewAccordion = ({ specialty, hospital }) => {
+const ReviewAccordion = ({ specialty, hospital, reviewId }) => {
   return (
     <AccordionItem p="2">
       <h2>
-        <Link>
+        <Link to={`/search/${hospital.hospitalId}/${reviewId}`}>
           <Box as="span" flex="1" p="2" textAlign="left">
             <Text as="b">
               {hospital.name} - (<Text as="i">{specialty}</Text>)

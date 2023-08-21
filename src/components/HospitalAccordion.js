@@ -40,7 +40,7 @@ const HospitalAccordion = ({ name, city, state, img, overallScore, id }) => {
   return (
     <AccordionItem p="2">
       <h2>
-        <Link>
+        <Link to={`/search/${id}`}>
           <Card
             // key={}
             w="100%"

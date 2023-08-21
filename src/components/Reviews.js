@@ -15,17 +15,15 @@ import {
 } from "@chakra-ui/react";
 
 const Reviews = () => {
-  // const [reviews, setReviews] = useState([]);
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
   const { hospitalId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUrl = useSelector((state) => state.hospitals.currentUrl);
   const currentHospitalReviews = useSelector((state) => state.reviews.reviews);
   dayjs.extend(relativeTime);
-  // console.log(currentHospitalReviews);
-  // const reduxURL = useSelector((state) => state.reviews.currentUrl);
 
-  const currentReviewURL = `http://localhost:8000/hospitals/${hospitalId}/reviews`;
+  const currentReviewURL = `${baseURL}/hospitals/${hospitalId}/reviews`;
 
   useEffect(() => {
     const fetchReviewData = async (currentReviewURL) => {
@@ -47,7 +45,7 @@ const Reviews = () => {
   };
 
   const handleBackClick = () => {
-    navigate(`/search`);
+    navigate(-1);
     dispatch(getHospitals(currentUrl));
   };
 
@@ -56,8 +54,6 @@ const Reviews = () => {
     const relativeTime = dayjs(review.date).fromNow();
 
     return (
-      // <Link key={review._id} to={`/search/${hospitalId}/${review._id}`}>
-
       <AccordionItem key={review._id}>
         <h2>
           <AccordionButton _expanded={{ color: "gray" }}>

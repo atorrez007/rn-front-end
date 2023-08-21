@@ -12,14 +12,11 @@ import HospitalAccordion from "./components/HospitalAccordion";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const SavedHospitalsDashboard = () => {
-  // const savedHospitals = useSelector((state) => state.users.savedHospitals);
-
-  // const hospitalState = useSelector((state) => state.hospitals.hospitals.data);
   const { user } = useAuth0();
 
   const existingHospitalList =
     JSON.parse(localStorage.getItem(`hospitalList_${user.sub}`)) || [];
-  // const url = `${baseURL}/hospitals/${hospitalId}`;
+
   return (
     <Box style={{ height: "600px", width: "1200px", overflow: "hidden" }}>
       <Card pt="2" w="500px" style={{ height: "100%", overflowY: "auto" }}>

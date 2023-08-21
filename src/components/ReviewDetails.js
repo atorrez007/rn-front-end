@@ -18,7 +18,7 @@ import {
 const ReviewDetails = () => {
   const baseURL = process.env.REACT_APP_API_BASE_URL;
   const dispatch = useDispatch();
-  const { reviewId, hospitalId } = useParams();
+  const { reviewId } = useParams();
   const navigate = useNavigate();
   const reviewDetailsURL = `${baseURL}/reviews/${reviewId}`;
   const currentHospitalReviewDetails = useSelector(
@@ -26,8 +26,8 @@ const ReviewDetails = () => {
   );
   // console.log(currentHospitalReviewDetails);
 
-  const handleReturn = (reviewId) => {
-    navigate(`/search/${reviewId}`);
+  const handleReturn = () => {
+    navigate(-1);
   };
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const ReviewDetails = () => {
     <Card maxW="600px" mx="33%" pt="4" py="4" mt="8">
       <Button
         onClick={() => {
-          handleReturn(hospitalId);
+          handleReturn();
         }}
       >
         Back to Reviews

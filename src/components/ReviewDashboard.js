@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 
 const ReviewDashboard = () => {
   const reviews = useSelector((state) => state.users.reviewsWritten);
+  // console.log(reviews);
 
   // const reviews = [1, 2, 3];
   return (
@@ -28,6 +29,7 @@ const ReviewDashboard = () => {
                   key={review._id}
                   specialty={review.specialty}
                   hospital={review.hospital}
+                  reviewId={review._id}
                 />
               ))
             ) : (

@@ -63,7 +63,6 @@ const ProfilePage = () => {
       </Card>
       <Flex justify="center" spacing={4} ml={20} pl={20}>
         <ReviewDashboard />
-
         <SavedHospitalsDashboard />
       </Flex>
     </Box>
