@@ -7,6 +7,7 @@ import {
   CardFooter,
   Heading,
   Image,
+  Spinner,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -17,30 +18,24 @@ import StarRating from "./StarRating";
 import { useAuth0 } from "@auth0/auth0-react";
 // Review accordion appears under the user's profile page for submitted hospital reviews.
 
-const HospitalAccordion = ({ name, city, state, img, overallScore, id }) => {
+const HospitalAccordion = ({
+  name,
+  city,
+  state,
+  img,
+  overallScore,
+  id,
+  unsave,
+}) => {
   const { user } = useAuth0();
   const handleUnsave = () => {
-    if (user) {
-      const userHospitalListKey = `hospitalList_${user.sub}`;
-
-      const existingHospitalList =
-        JSON.parse(localStorage.getItem(userHospitalListKey)) || [];
-
-      const updatedHospitalList = existingHospitalList.filter(
-        (hospital) => hospital.id !== id
-      );
-
-      localStorage.setItem(
-        userHospitalListKey,
-        JSON.stringify(updatedHospitalList)
-      );
-    }
+    unsave(id);
   };
 
   return (
     <AccordionItem p="2">
       <h2>
-        <Link to={`/search/${id}`}>
+        {user ? (
           <Card
             // key={}
             w="100%"
@@ -75,13 +70,17 @@ const HospitalAccordion = ({ name, city, state, img, overallScore, id }) => {
               </CardBody>
 
               <CardFooter>
-                <Button variant="solid" colorScheme="blue">
-                  Go To Hospital
-                </Button>
+                <Link to={`/search/${id}`}>
+                  <Button variant="solid" colorScheme="blue">
+                    Go To Hospital
+                  </Button>
+                </Link>
               </CardFooter>
             </Stack>
           </Card>
-        </Link>
+        ) : (
+          <Spinner />
+        )}
       </h2>
       <AccordionPanel pb={4}></AccordionPanel>
     </AccordionItem>

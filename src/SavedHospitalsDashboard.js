@@ -6,7 +6,7 @@ import {
   CardHeader,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import HospitalAccordion from "./components/HospitalAccordion";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -14,8 +14,23 @@ import { useAuth0 } from "@auth0/auth0-react";
 const SavedHospitalsDashboard = () => {
   const { user } = useAuth0();
 
-  const existingHospitalList =
-    JSON.parse(localStorage.getItem(`hospitalList_${user.sub}`)) || [];
+  const [existingHospitalList, setExistingHospitalList] = useState(
+    JSON.parse(localStorage.getItem(`hospitalList_${user.sub}`)) || []
+  );
+
+  const handleHospitalUnsave = (hospitalId) => {
+    const updatedHospitalList = existingHospitalList.filter(
+      (hospital) => hospital.id !== hospitalId
+    );
+    localStorage.setItem(
+      `hospitalList_${user.sub}`,
+      JSON.stringify(updatedHospitalList)
+    );
+
+    setExistingHospitalList(updatedHospitalList);
+  };
+
+  useEffect(() => {}, []);
 
   return (
     <Box style={{ height: "600px", width: "1200px", overflow: "hidden" }}>
@@ -35,6 +50,7 @@ const SavedHospitalsDashboard = () => {
                   state={hospital.state}
                   overallScore={hospital.overallScore}
                   id={hospital.id}
+                  unsave={handleHospitalUnsave}
                 />
               ))
             ) : (
