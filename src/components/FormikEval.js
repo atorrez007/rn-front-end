@@ -51,6 +51,7 @@ const EvalForm = () => {
   const { user } = useAuth0();
   const [characterCount] = useState(250);
   const navigate = useNavigate();
+
   const toast = useToast();
   const toastAlert = () => {
     toast({

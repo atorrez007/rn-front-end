@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { Box, Button, Card, CardFooter, Text } from "@chakra-ui/react";
@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { getHospitals } from "../redux/hospitalReducer";
 import { getReviews } from "../redux/reviewReducer";
+import { getUserReviews } from "../redux/userReducer";
 import {
   Accordion,
   AccordionItem,
@@ -13,14 +14,19 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from "@chakra-ui/react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Reviews = () => {
   const baseURL = process.env.REACT_APP_API_BASE_URL;
   const { hospitalId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { user } = useAuth0();
+
   const currentUrl = useSelector((state) => state.hospitals.currentUrl);
   const currentHospitalReviews = useSelector((state) => state.reviews.reviews);
+  const reviewsWritten = useSelector((state) => state.users.reviewsWritten);
+  const [hasReviewFromUser, setHasReviewFromUser] = useState(false);
   dayjs.extend(relativeTime);
 
   const currentReviewURL = `${baseURL}/hospitals/${hospitalId}/reviews`;
@@ -35,6 +41,33 @@ const Reviews = () => {
     };
     fetchReviewData(currentReviewURL);
   }, [dispatch, currentReviewURL]);
+
+  useEffect(() => {}, []);
+
+  useEffect(() => {
+    const getUserDetails = async () => {
+      if (user) {
+        const userURL = `${baseURL}/users/${user.sub}`;
+        dispatch(getUserReviews(userURL));
+
+        // console.log(userURL);
+      } else {
+        console.log(`getting user details, please wait.`);
+      }
+    };
+    getUserDetails();
+  }, [user, dispatch, baseURL]);
+
+  useEffect(() => {
+    const reviewLoop = async () => {
+      await reviewsWritten.forEach((review) => {
+        if (review.hospital.hospitalId === hospitalId) {
+          setHasReviewFromUser(true);
+        }
+      });
+    };
+    reviewLoop();
+  }, [hospitalId]);
 
   const handleReviewChange = (reviewId) => {
     navigate(`/search/${hospitalId}/${reviewId}`);
@@ -96,17 +129,30 @@ const Reviews = () => {
           >
             Back
           </Button>
-          <Button
-            colorScheme="green"
-            onClick={() => {
-              handleReviewAdd(hospitalId);
-            }}
-          >
-            Add Review
-          </Button>
+          {!hasReviewFromUser ? (
+            <Button
+              colorScheme="green"
+              onClick={() => {
+                handleReviewAdd(hospitalId);
+              }}
+            >
+              Add Review
+            </Button>
+          ) : (
+            <Button
+              colorScheme="green"
+              isDisabled
+              onClick={() => {
+                handleReviewAdd(hospitalId);
+              }}
+            >
+              Add Review
+            </Button>
+          )}
         </Box>
 
         <Accordion width="100%" height="100%" alignItems="center" allowMultiple>
+          {/* {hasReviewFromUser.toString()} */}
           {reviewBreakdown}
         </Accordion>
       </Box>
