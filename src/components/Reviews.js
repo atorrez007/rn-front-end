@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { Box, Button, Card, CardFooter, Text } from "@chakra-ui/react";
+import { Box, Button, Card, CardFooter, Text, Tooltip } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { getHospitals } from "../redux/hospitalReducer";
@@ -139,15 +139,21 @@ const Reviews = () => {
               Add Review
             </Button>
           ) : (
-            <Button
-              colorScheme="green"
-              isDisabled
-              onClick={() => {
-                handleReviewAdd(hospitalId);
-              }}
+            <Tooltip
+              label="You already left a review for this hospital."
+              placement="top"
+              hasArrow
             >
-              Add Review
-            </Button>
+              <Button
+                colorScheme="green"
+                isDisabled
+                onClick={() => {
+                  handleReviewAdd(hospitalId);
+                }}
+              >
+                Add Review
+              </Button>
+            </Tooltip>
           )}
         </Box>
 
