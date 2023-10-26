@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ChakraProvider, Box } from "@chakra-ui/react";
 import Home from "./components/Home";
-import About from "./components/About";
 import Hero from "./components/Hero";
 import Search from "./components/Search";
 import Contact from "./components/Contact";
@@ -20,7 +19,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
+            {/* <Route path="/about" element={<About />} /> */}
             <Route path="/hero" element={<Hero />} />
             <Route path="/search" element={<Search />} />
             <Route path="/search/:hospitalId" element={<HospitalDetails />} />

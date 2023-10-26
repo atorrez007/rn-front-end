@@ -6,6 +6,7 @@ import HomeCard from "./HomeCard";
 import tile1 from "../assets/tile-photo-1.jpg";
 import tile4 from "../assets/tile-photo-4.jpg";
 import tile3 from "../assets/tile-photo-3.jpg";
+import About from "./About";
 
 // 3 quadrants.
 // 1. Top page explains the about.
@@ -80,6 +81,7 @@ const Home = () => {
           just right for you!"
         />
       </Box>
+      <About />
     </Box>
   );
 };
