@@ -12,13 +12,13 @@ import { useNavigate } from "react-router-dom";
 
 const HomeNavbar = () => {
   const baseURL = process.env.REACT_APP_API_BASE_URL;
-  console.log(`baseurl is ${baseURL}`);
   const navigate = useNavigate();
   const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const { loginWithPopup } = useAuth0();
   const { logout } = useAuth0();
 
   const loginFunc = async () => {
+    console.log(loginWithPopup);
     await loginWithPopup();
   };
 
