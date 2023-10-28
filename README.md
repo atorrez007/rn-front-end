@@ -1,70 +1,58 @@
-# Getting Started with Create React App
+# RN-ReviewsNow 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+https://rn-front-end.vercel.app/
 
-## Available Scripts
+**Introduction**
 
-In the project directory, you can run:
+Our healthcare system is facing a growing crisis with increasing patient numbers and inadequate nurse-to-patient ratios. RN-ReviewsNow is a project designed to address this issue by providing transparency and accountability within the healthcare sector. We aim to empower nurses, improve patient care, and create a platform for sharing valuable insights.
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technologies Used
 
-### `npm test`
+- **Frontend**: RN-ReviewsNow is built with React, providing an intuitive and user-friendly interface for users to access hospital reviews and ratings.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Backend**: The project uses an Express/Node backend to handle server-side logic and database operations.
 
-### `npm run build`
+- **Database**: We store and manage hospital information, user reviews, and ratings in a MongoDB database.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Project Challenges
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+One of the primary challenges of this project is integrating a MongoDB cluster with hospital information updated from the CMS website (Centers for Medicare & Medicaid Services). We have obtained a data API to facilitate this process, but ensuring seamless and accurate data synchronization is essential.
 
-### `npm run eject`
+## Minimum Viable Product (MVP)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The MVP of RN-ReviewsNow focuses on the following key features:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Hospital Ratings**: Allow users to access ratings for hospitals based on nurse-to-patient ratios, helping them make informed decisions about travel assignments.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. **Hospital Reviews**: Enable users to post reviews of hospitals where they have completed travel assignments, sharing their experiences and insights.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+In the future, we plan to expand the platform's functionality to incorporate more transparency by allowing users to confidentially disclose the agency they work for and the pay they received during their assignments. This feature will benefit both newly established agencies seeking to recruit more nurses with better pay and more established agencies, preventing them from undercutting their nurses' compensation.
 
-## Learn More
+## CRUD Functionality
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+RN-ReviewsNow offers CRUD (Create, Read, Update, Delete) functionality to ensure a dynamic user experience:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Create**: Users can post reviews of hospitals they have worked at, providing details and ratings through a user-friendly form.
 
-### Code Splitting
+- **Read**: Users can access information on hospitals, view ratings, and read reviews from other nurses to make informed decisions.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **Update**: Users can update their reviews if needed to reflect changes in their experiences.
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+To populate the hospitals in the database, we ideally query the CMS website for providers in the United States and then populate the MongoDB according to our Schema. If automatic data retrieval is not feasible, we will consider manual data updates to ensure the platform's accuracy and reliability.
 
-### Making a Progressive Web App
+**Getting Started**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Clone this repository.
+- Navigate to the project directory.
+- Run `npm install` to install the project's dependencies.
+- Run `npm run start:dev` to start the development server.
+- Run `npm run start:prod` to start the production server.
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+RN-ReviewsNow is a vital project in the healthcare sector, addressing the critical need for transparency and accountability in nurse-patient ratios and hospital quality. We are dedicated to making this platform a valuable resource for traveling nurses and medical professionals. Join us in our mission to improve patient care and empower healthcare professionals!
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+https://rn-front-end.vercel.app/
