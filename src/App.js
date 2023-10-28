@@ -13,6 +13,7 @@ import ProfilePage from "./components/ProfilePage";
 import theme from "./theme";
 
 function App() {
+  console.log(process.env.REACT_APP_API_BASE_URL);
   return (
     <ChakraProvider theme={theme}>
       <Box bg="gray.600" height="100vh" display="flex" flexDirection="column">
