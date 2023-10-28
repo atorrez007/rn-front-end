@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 const HomeNavbar = () => {
   const baseURL = process.env.REACT_APP_API_BASE_URL;
+  console.log(`baseurl is ${baseURL}`);
   const navigate = useNavigate();
   const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const { loginWithPopup } = useAuth0();
@@ -140,7 +141,6 @@ const HomeNavbar = () => {
         <Box mt="8">
           <Button
             onClick={() => {
-              // loginWithPopup();
               loginFunc();
             }}
             ml="120px"
@@ -156,8 +156,6 @@ const HomeNavbar = () => {
         </Box>
       )}
 
-      {/* <Spacer /> */}
-
       <Box flex="2" display="flex" justifyContent="center" alignItems="center">
         <Image
           alt="RN-Logo"
@@ -166,11 +164,8 @@ const HomeNavbar = () => {
           w={{ base: "80%", md: "400px" }}
           h="81px"
           ml="75px"
-          // maxWidth="800px"
-          // maxHeight="300px"
         />
       </Box>
-
       <Spacer />
     </Flex>
   );

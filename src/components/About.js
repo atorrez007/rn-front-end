@@ -54,7 +54,7 @@ const About = () => {
                   size={25}
                   style={{ color: "white", marginRight: "1rem" }}
                 />
-              </Box>{" "}
+              </Box>
               <Box fontSize="2xl" as="b">
                 <FaFacebook
                   size={25}
