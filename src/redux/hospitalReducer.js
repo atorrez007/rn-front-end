@@ -22,11 +22,14 @@ export const SET_STATE = "SET_STATE";
 export function getAllHospitals(token) {
   return (dispatch) => {
     axios
-      .get(`http://localhost:8000/hospitals?allHospitals=true`, {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      })
+      .get(
+        `${process.env.REACT_APP_API_BASE_URL}/hospitals?allHospitals=true`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((response) => {
         dispatch({ type: "GET_ALL_HOSPITALS", allHospitals: response.data });
       })
@@ -60,7 +63,7 @@ const initialState = {
   allHospitals: [],
   hospitals: [],
   selectedHospital: [],
-  currentUrl: `http://localhost:8000/hospitals?page=1&state=&city=&query=`,
+  currentUrl: `${process.env.REACT_APP_API_BASE_URL}/hospitals?page=1&state=&city=&query=`,
   loading: false,
   error: null,
 };
