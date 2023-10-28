@@ -1,5 +1,5 @@
 import axios from "axios";
-import userReducer from "./userReducer";
+
 // Going to need getHospitalbyId helper-method to get hospital byID in hospitalDetails.js
 export function getHospitals(newUrl, token) {
   return async (dispatch) => {
